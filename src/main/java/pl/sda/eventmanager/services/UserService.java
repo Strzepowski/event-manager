@@ -32,13 +32,14 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void save(String username, String password, String email) {
 
-        final User myUser = new User();
-        myUser.setUsername(username);
-        myUser.setPassword(passwordEncoder.encode(password));
-        myUser.setEmail(email);
-        userRepository.save(myUser);
+        if (userRepository.findByEmail(email) == null) {
+            final User myUser = new User();
+            myUser.setUsername(username);
+            myUser.setPassword(passwordEncoder.encode(password));
+            myUser.setEmail(email);
+            userRepository.save(myUser);
+        }
     }
-
 
 }
 
