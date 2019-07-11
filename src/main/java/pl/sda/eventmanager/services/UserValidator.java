@@ -34,25 +34,28 @@ public class UserValidator implements Validator {
                 .withConfirmPassword(registerForm.getConfirmPassword())
                 .build();
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "This field is required.");
         if (userService.findByEmail(user.getEmail()) != null) {
-            errors.rejectValue("email", "Duplicate.registerForm.email");
+            errors.rejectValue("email", "Duplicate.registerForm.email", "Email already in base. Please Create account on another email.");
+        }
+        if (!user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
+            errors.rejectValue("email", "NotEmail.registerForm.email","Please use proper email address.");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty", "This field is required.");
         if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.registerForm.username");
+            errors.rejectValue("username", "Duplicate.registerForm.username", "Username taken. Please choose another username.");
         }
         if (user.getUsername().length() <= 3 || user.getUsername().length() >= 50) {
-            errors.rejectValue("username", "Size.registerForm.username");
+            errors.rejectValue("username", "Size.registerForm.username", "Please use between 3 and 50 characters.");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "This field is required.");
         if (user.getPassword().length() < 8 || user.getPassword().length() > 30) {
-            errors.rejectValue("password", "Size.registerForm.password");
+            errors.rejectValue("password", "Size.registerForm.password", "Please use between 8 and 30 characters.");
         }
         if (!user.getConfirmPassword().equals(user.getPassword())) {
-            errors.rejectValue("confirmPassword", "Diff.registerForm.confirmPassword");
+            errors.rejectValue("confirmPassword", "Diff.registerForm.confirmPassword", "Passwords don't match.");
         }
     }
 }

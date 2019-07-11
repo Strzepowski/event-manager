@@ -31,15 +31,20 @@ public class RegisterController {
     }
 
     @PostMapping("register")
-    public String registerPost(@ModelAttribute RegisterForm registerForm, BindingResult bindingResult) {
+    public ModelAndView registerPost(@ModelAttribute RegisterForm registerForm, BindingResult bindingResult) {
 
         userValidator.validate(registerForm, bindingResult);
+
         if (bindingResult.hasErrors()) {
-            return "register";}
-
-
-            userService.save(registerForm.getEmail(), registerForm.getUsername(), registerForm.getPassword(), registerForm.getConfirmPassword());
-
-            return "redirect:/";
+            ModelAndView modelAndView = new ModelAndView("register");
+            modelAndView.addObject("error", bindingResult.getFieldError().getDefaultMessage());
+            return modelAndView;
         }
+
+        userService.save(registerForm.getEmail(), registerForm.getUsername(), registerForm.getPassword(), registerForm.getConfirmPassword());
+        ModelAndView modelAndView = new ModelAndView("index");
+        //TODO
+//        modelAndView.addObject("loggedUser", userService.findByEmail(securityService.findLoggedInUsername()).getUsername());
+        return modelAndView;
     }
+}
