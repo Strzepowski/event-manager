@@ -32,8 +32,8 @@ public class SecurityService {
     }
 
 
-    public void login(String username, String password) {
-        UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+    public void login(String email, String password) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
         UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
                 = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
 
@@ -41,7 +41,7 @@ public class SecurityService {
 
         if (usernamePasswordAuthenticationToken.isAuthenticated()) {
             SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-            logger.debug(String.format("Login %s successfull!", username));
+            logger.debug(String.format("Login %s successfull!", email));
         }
     }
 

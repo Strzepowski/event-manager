@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import pl.sda.eventmanager.dto.LoginForm;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.model.User;
 
@@ -38,8 +39,8 @@ public class UserValidator implements Validator {
         if (userService.findByEmail(user.getEmail()) != null) {
             errors.rejectValue("email", "Duplicate.registerForm.email", "Email already in base. Please Create account on another email.");
         }
-        if (!user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")){
-            errors.rejectValue("email", "NotEmail.registerForm.email","Please use proper email address.");
+        if (!user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
+            errors.rejectValue("email", "NotEmail.registerForm.email", "Please use proper email address.");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty", "This field is required.");
@@ -57,5 +58,31 @@ public class UserValidator implements Validator {
         if (!user.getConfirmPassword().equals(user.getPassword())) {
             errors.rejectValue("confirmPassword", "Diff.registerForm.confirmPassword", "Passwords don't match.");
         }
+
+
+    }
+
+    public void validateLogin(Object o, Errors errors) {
+        LoginForm loginForm = (LoginForm) o;
+
+        User user = User.UserBuilder
+                .anUser()
+                .withEmail(loginForm.getEmail())
+                .withPassword(loginForm.getPassword())
+                .build();
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "This field is required.");
+        if (!user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
+            errors.rejectValue("email", "NotEmail.loginForm.email", "Please use proper email address.");
+        }
+        if (userService.findByEmail(user.getEmail()) == null){
+            errors.rejectValue("email", "WrongEmailOrPassword.loginForm.email", "Wrong email or password.");
+        }
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "This field is required.");
+        if (!userService.findByEmail(loginForm.getEmail()).getPassword().equals(loginForm.getPassword())) {
+            errors.rejectValue("password", "WrongEmailOrPassword.loginForm.password", "Wrong email or password.");
+        }
+
     }
 }

@@ -33,8 +33,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication()
-                .dataSource(dataSource).configure();
-
+                .dataSource(dataSource)
+                .usersByUsernameQuery("SELECT email, password FROM user WHERE username=?")
+//                .authoritiesByUsernameQuery("SELECT email, authority from authorities where username=?")
+;
 
     }
 
@@ -51,6 +53,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
+                    .failureForwardUrl("/login")
                     .successForwardUrl("/")
                     .permitAll()
                 .and()
