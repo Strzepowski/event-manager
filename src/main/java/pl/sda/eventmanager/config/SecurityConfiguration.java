@@ -30,15 +30,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.dataSource = dataSource;
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication()
-                .dataSource(dataSource)
-                .usersByUsernameQuery("SELECT email, password FROM user WHERE username=?")
-//                .authoritiesByUsernameQuery("SELECT email, authority from authorities where username=?")
-;
-
-    }
+//    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.jdbcAuthentication()
+//                .dataSource(dataSource)
+//                .usersByUsernameQuery("SELECT email, password FROM user WHERE email=?")
+////                .authoritiesByUsernameQuery("SELECT email, role from user_role WHERE username=?")
+//;
+//
+//    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -62,7 +62,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .clearAuthentication(true)
                 .logoutSuccessUrl("/")
-                    .permitAll();
+                    .permitAll()
+                .and()
+                    .userDetailsService(userDetailsService);
 
 
 

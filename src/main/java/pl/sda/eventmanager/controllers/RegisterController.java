@@ -15,12 +15,10 @@ import pl.sda.eventmanager.services.UserValidator;
 public class RegisterController {
 
     private final UserService userService;
-    private final SecurityService securityService;
     private final UserValidator userValidator;
 
-    public RegisterController(UserService userService, SecurityService securityService, UserValidator userValidator) {
+    public RegisterController(UserService userService, UserValidator userValidator) {
         this.userService = userService;
-        this.securityService = securityService;
         this.userValidator = userValidator;
     }
 
