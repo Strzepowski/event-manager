@@ -29,16 +29,16 @@ public class LoginController {
     }
 
 
-    // TODO
-//    @PostMapping("login")
-//    public ModelAndView loginPost(@ModelAttribute LoginForm loginForm, String error){
-//
-//    ModelAndView modelAndView = new ModelAndView(//TODO);
-//        if (error != null)
-//            modelAndView.addObject("error", "Your username and password is invalid.");
-//
-//        securityService.login(loginForm.getEmail(), loginForm.getPassword());
-//
-//        return modelAndView;
-//    }
+
+    @PostMapping("login")
+    public ModelAndView loginPost(@ModelAttribute LoginForm loginForm, String error){
+
+    ModelAndView modelAndView = new ModelAndView("login");
+        if (error != null)
+            modelAndView.addObject("error", "Your username and password is invalid.");
+
+        securityService.login(loginForm.getEmail(), loginForm.getPassword());
+
+        return modelAndView;
+    }
 }

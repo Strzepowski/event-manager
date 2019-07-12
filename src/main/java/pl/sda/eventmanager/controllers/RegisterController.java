@@ -42,9 +42,10 @@ public class RegisterController {
         }
 
         userService.save(registerForm.getEmail(), registerForm.getUsername(), registerForm.getPassword(), registerForm.getConfirmPassword());
+
         ModelAndView modelAndView = new ModelAndView("index");
-        //TODO
-//        modelAndView.addObject("loggedUser", userService.findByEmail(securityService.findLoggedInUsername()).getUsername());
+        modelAndView.addObject("accountCreated", registerForm.getEmail());
+
         return modelAndView;
     }
 }

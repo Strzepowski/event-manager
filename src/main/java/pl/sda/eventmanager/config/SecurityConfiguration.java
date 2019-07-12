@@ -9,6 +9,9 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import javax.sql.DataSource;
 
 
 @Configuration
@@ -17,31 +20,46 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoderConfiguration passwordEncoderConfiguration;
+    private final DataSource dataSource;
 
     //TODO there is more than one bean?
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoderConfiguration passwordEncoderConfiguration) {
+    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoderConfiguration passwordEncoderConfiguration, DataSource dataSource) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoderConfiguration = passwordEncoderConfiguration;
+        this.dataSource = dataSource;
     }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        super.configure(auth);
+        auth.jdbcAuthentication()
+                .dataSource(dataSource).configure();
+
+
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/home", "/register", "/h2db")
-                .permitAll()
-                .and().formLogin()
-                .loginPage("/login")
-                .successForwardUrl("/")
-                .permitAll()
-                .and().logout()
-                .permitAll();
+                    .antMatchers("/", "/home", "/register", "/h2db/**")
+                    .permitAll()
+                    .anyRequest()
+                        .fullyAuthenticated()
+                .and()
+                    .formLogin()
+                    .loginPage("/login")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .successForwardUrl("/")
+                    .permitAll()
+                .and()
+                    .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/")
+                    .permitAll();
 
 
 
