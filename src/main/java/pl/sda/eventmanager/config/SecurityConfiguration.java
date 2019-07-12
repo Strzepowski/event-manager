@@ -30,16 +30,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.dataSource = dataSource;
     }
 
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.jdbcAuthentication()
-//                .dataSource(dataSource)
-//                .usersByUsernameQuery("SELECT email, password FROM user WHERE email=?")
-////                .authoritiesByUsernameQuery("SELECT email, role from user_role WHERE username=?")
-//;
-//
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -53,8 +43,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .loginPage("/login")
                     .usernameParameter("email")
                     .passwordParameter("password")
+//                    .defaultSuccessUrl("/", true)
+
                     .failureForwardUrl("/login")
-                    .successForwardUrl("/")
                     .permitAll()
                 .and()
                     .logout()

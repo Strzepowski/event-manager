@@ -48,7 +48,7 @@ public class LoginController {
         securityService.login(loginForm.getEmail(), loginForm.getPassword());
 
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("loggedUser", securityService.findLoggedInUsername());
+
 
         return modelAndView;
     }
