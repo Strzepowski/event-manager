@@ -30,12 +30,12 @@ public class UserService implements UserDetailsService {
 
     @Override
     @Transactional(readOnly = true)
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username);
+        User user = userRepository.findByEmail(email);
 
         if (user == null) {
-            throw new UsernameNotFoundException("User " + username + " doesn't exist");
+            throw new UsernameNotFoundException("User " + email + " doesn't exist");
         }
 
         Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();

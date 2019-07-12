@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                    .antMatchers("/", "/home", "/register", "/h2db/**")
+                    .antMatchers("/", "/register", "/h2db/**")
                     .permitAll()
                     .anyRequest()
                         .fullyAuthenticated()

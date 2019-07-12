@@ -13,11 +13,10 @@ import pl.sda.eventmanager.model.User;
 public class UserValidator implements Validator {
 
     private final UserService userService;
-    private  final PasswordEncoder passwordEncoder;
 
-    public UserValidator(UserService userService, PasswordEncoder passwordEncoder) {
+    public UserValidator(UserService userService) {
         this.userService = userService;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
 
@@ -78,12 +77,18 @@ public class UserValidator implements Validator {
         if (!user.getEmail().matches("^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$")) {
             errors.rejectValue("email", "NotEmail", "Please use proper email address.");
         }
-        if (userService.findByEmail(user.getEmail()) == null){
+        if (userService.findByEmail(user.getEmail()) == null) {
             errors.rejectValue("email", "WrongEmailOrPassword", "Wrong email or password.");
         }
 
+
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");
-//        if (userService.findByEmail(loginForm.getEmail()).getPassword() != (loginForm.getPassword())) {
+
+        //TODO jak zwalidować błędne hasło, żeby wyświetlało defaultMessage jak w przypadku innych błędów, a nie rzucało wyjątek BadCredentialsException w konsoli?
+
+
+        //null pointer
+//        if (!userService.findByEmail(loginForm.getEmail()).getPassword().equals((loginForm.getPassword()))) {
 //            errors.rejectValue("password", "WrongEmailOrPassword", "Wrong email or password.");
 //        }
 
