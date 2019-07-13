@@ -26,8 +26,8 @@
 <div th:if="${accountCreated != null}">
     <p>Created account for: <span th:text="${accountCreated}">.</span></p>
 </div>
-<div th:if="${loggedUser != null}">
-    <p>User: <span th:text="${loggedUser}"></span> logged in.</p>
+<div th:if="${auth != null}">
+    <p>User: <span th:text="${auth}"></span> logged in.</p>
 </div>
 
 

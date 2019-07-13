@@ -1,7 +1,8 @@
 package pl.sda.eventmanager.controllers;
 
 
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,16 +14,12 @@ import pl.sda.eventmanager.services.SecurityService;
 @Controller
 public class IndexController {
 
-    private final SecurityService securityService;
-
-    public IndexController(SecurityService securityService) {
-        this.securityService = securityService;
-    }
 
     @GetMapping("/")
-    public ModelAndView get() {
+    public ModelAndView get(Authentication auth) {
         ModelAndView modelAndView = new ModelAndView("index");
-        modelAndView.addObject("loggedUser", securityService.findLoggedInUsername());
+
+        modelAndView.addObject("auth", ((UserDetails) auth.getPrincipal()).getUsername());
         return modelAndView;
     }
 }

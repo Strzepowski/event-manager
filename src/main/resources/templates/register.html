@@ -35,13 +35,13 @@
                           method="post">
 
                         <div class="form-group">
-                            <input type="email"
+                            <input type="text"
                                    name="email"
                                    id="email"
                                    class="form-control input-sm"
                                    placeholder="Email Address"
                                    th:field="*{email}">
-<!--                                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$">-->
+
                         </div>
 
                         <div class="row">
@@ -53,7 +53,7 @@
                                            class="form-control input-sm"
                                            placeholder="Username"
                                            th:field="*{username}">
-<!--                                           pattern=".{3,50}">-->
+
                                     <small>*3-50 characters
                                     </small>
                                 </div>
@@ -69,7 +69,7 @@
                                            class="form-control input-sm"
                                            placeholder="Password*"
                                            th:field="*{password}">
-<!--                                           pattern=".{8,30}">-->
+
                                     <small>*8-30
                                            characters
                                     </small>
@@ -84,7 +84,7 @@
                                            class="form-control input-sm"
                                            placeholder="Confirm Password"
                                            th:field="*{confirmPassword}">
-<!--                                           pattern=".{8,30}">-->
+
                                 </div>
                             </div>
 

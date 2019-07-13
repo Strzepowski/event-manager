@@ -45,11 +45,8 @@ public class LoginController {
             return modelAndView;
         }
 
-        securityService.login(loginForm.getEmail(), loginForm.getPassword());
+//        securityService.login(loginForm.getEmail(), loginForm.getPassword());
 
-        ModelAndView modelAndView = new ModelAndView("index");
-
-
-        return modelAndView;
+        return new ModelAndView("forward:/login");
     }
 }

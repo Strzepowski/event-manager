@@ -79,18 +79,14 @@ public class UserValidator implements Validator {
         }
         if (userService.findByEmail(user.getEmail()) == null) {
             errors.rejectValue("email", "WrongEmailOrPassword", "Wrong email or password.");
+        } else {
+
+            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");
+            if (!userService.findByEmail(loginForm.getEmail()).getPassword().equals(loginForm.getPassword())) {
+                errors.rejectValue("password", "WrongEmailOrPassword", "Wrong email or password.");
+            }
+
         }
-
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");
-
-        //TODO jak zwalidować błędne hasło, żeby wyświetlało defaultMessage jak w przypadku innych błędów, a nie rzucało wyjątek BadCredentialsException w konsoli?
-
-
-        //null pointer
-//        if (!userService.findByEmail(loginForm.getEmail()).getPassword().equals((loginForm.getPassword()))) {
-//            errors.rejectValue("password", "WrongEmailOrPassword", "Wrong email or password.");
-//        }
-
     }
+
 }
