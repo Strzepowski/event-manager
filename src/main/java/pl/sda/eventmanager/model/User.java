@@ -28,11 +28,9 @@ public class User implements UserDetails {
     @Column(nullable = false)
     @Transient
     private String confirmPassword;
-    @ManyToMany
-    @JoinTable(name = "user_role",
-            joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles;
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserInfo userInfo;
@@ -41,7 +39,7 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+        return Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
     }
 
     @Override
@@ -75,7 +73,7 @@ public class User implements UserDetails {
         private String nickname;
         private String password;
         private String confirmPassword;
-        private Set<Role> roles;
+        private Role role;
         private UserInfo userInfo;
 
         private UserBuilder() {
@@ -110,8 +108,8 @@ public class User implements UserDetails {
             return this;
         }
 
-        public UserBuilder withRoles(Set<Role> roles) {
-            this.roles = roles;
+        public UserBuilder withRole(Role role) {
+            this.role = role;
             return this;
         }
 
@@ -127,7 +125,7 @@ public class User implements UserDetails {
             user.setNickname(nickname);
             user.setPassword(password);
             user.setConfirmPassword(confirmPassword);
-            user.setRoles(roles);
+            user.setRole(role);
             user.setUserInfo(userInfo);
             return user;
         }

@@ -20,7 +20,7 @@
     </div>
     <div sec:authorize="isAuthenticated()">
         <div class="nav-item">
-            <button class="btn btn-success mr-1"><span sec:authentication="name">Logged user</span></button>
+            <button class="btn btn-success mr-1">Logged as: <span sec:authentication="name">Logged user</span></button>
         </div>
     </div>
     <div sec:authorize="isAuthenticated()">

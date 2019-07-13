@@ -1,10 +1,7 @@
 package pl.sda.eventmanager.dto;
 
 import lombok.Data;
-
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import pl.sda.eventmanager.model.Role;
 
 @Data
 public class RegisterForm {
@@ -13,4 +10,5 @@ public class RegisterForm {
     private String nickname;
     private String password;
     private String confirmPassword;
+    private Role role = Role.USER;
 }

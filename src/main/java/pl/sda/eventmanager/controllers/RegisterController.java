@@ -38,7 +38,7 @@ public class RegisterController {
             return modelAndView;
         }
 
-        userService.save(registerForm.getEmail(), registerForm.getNickname(), registerForm.getPassword(), registerForm.getConfirmPassword());
+        userService.save(registerForm.getEmail(), registerForm.getNickname(), registerForm.getPassword(), registerForm.getConfirmPassword(), registerForm.getRole());
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("accountCreated", registerForm.getEmail());
