@@ -22,7 +22,7 @@ public class User implements UserDetails {
     @Column(nullable = false, unique = true)
     private String email;
     @Column(nullable = false, unique = true)
-    private String username;
+    private String nickname;
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
@@ -44,6 +44,11 @@ public class User implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
         return Collections.singletonList(new SimpleGrantedAuthority("USER"));
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 
     @Override
@@ -69,7 +74,7 @@ public class User implements UserDetails {
     public static final class UserBuilder {
         private Long id;
         private String email;
-        private String username;
+        private String nickname;
         private String password;
         private String confirmPassword;
         private Set<Role> roles;
@@ -102,8 +107,8 @@ public class User implements UserDetails {
             return this;
         }
 
-        public UserBuilder withUsername(String username) {
-            this.username = username;
+        public UserBuilder withNickname(String nickname) {
+            this.nickname = nickname;
             return this;
         }
 
@@ -121,7 +126,7 @@ public class User implements UserDetails {
             User user = new User();
             user.setId(id);
             user.setEmail(email);
-            user.setUsername(username);
+            user.setNickname(nickname);
             user.setPassword(password);
             user.setConfirmPassword(confirmPassword);
             user.setRoles(roles);

@@ -20,24 +20,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
     private final PasswordEncoderConfiguration passwordEncoderConfiguration;
-    private final DataSource dataSource;
 
-    //TODO there is more than one bean?
+    //TODO there is more than one bean? - temp solution: @SuppressWarnings
 
-    public SecurityConfiguration(UserDetailsService userDetailsService, PasswordEncoderConfiguration passwordEncoderConfiguration, DataSource dataSource) {
+    public SecurityConfiguration(@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection") UserDetailsService userDetailsService, PasswordEncoderConfiguration passwordEncoderConfiguration) {
         this.userDetailsService = userDetailsService;
         this.passwordEncoderConfiguration = passwordEncoderConfiguration;
-        this.dataSource = dataSource;
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
+
                     .antMatchers("/", "/register", "/h2db/**")
                     .permitAll()
                     .anyRequest()
-                        .fullyAuthenticated()
+                    .fullyAuthenticated()
+
                 .and()
                     .formLogin()
                     .loginPage("/login")
@@ -46,13 +46,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .defaultSuccessUrl("/", true)
                     .failureForwardUrl("/login")
                     .permitAll()
+
                 .and()
                     .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutSuccessUrl("/")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutSuccessUrl("/")
                     .permitAll()
+
                 .and()
                     .userDetailsService(userDetailsService);
 

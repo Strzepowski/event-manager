@@ -12,15 +12,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class SecurityService {
 
-    private final AuthenticationManager authenticationManager;
-    private final UserDetailsService userDetailsService;
     private static final Logger logger = LoggerFactory.getLogger
             (SecurityService.class);
-
-    public SecurityService(AuthenticationManager authenticationManager, UserDetailsService userDetailsService) {
-        this.authenticationManager = authenticationManager;
-        this.userDetailsService = userDetailsService;
-    }
 
 
     public String findLoggedInUsername() {
@@ -30,20 +23,6 @@ public class SecurityService {
         }
         return null;
     }
-
-
-//    public void login(String email, String password) {
-//        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
-//        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken
-//                = new UsernamePasswordAuthenticationToken(userDetails, password, userDetails.getAuthorities());
-//
-//        authenticationManager.authenticate(usernamePasswordAuthenticationToken);
-//
-//        if (usernamePasswordAuthenticationToken.isAuthenticated()) {
-//            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-//            logger.debug(String.format("Login %s successfull!", email));
-//        }
-//    }
 
 
 

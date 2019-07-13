@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.RegisterForm;
-import pl.sda.eventmanager.services.SecurityService;
 import pl.sda.eventmanager.services.UserService;
 import pl.sda.eventmanager.services.UserValidator;
 
@@ -39,7 +38,7 @@ public class RegisterController {
             return modelAndView;
         }
 
-        userService.save(registerForm.getEmail(), registerForm.getUsername(), registerForm.getPassword(), registerForm.getConfirmPassword());
+        userService.save(registerForm.getEmail(), registerForm.getNickname(), registerForm.getPassword(), registerForm.getConfirmPassword());
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("accountCreated", registerForm.getEmail());

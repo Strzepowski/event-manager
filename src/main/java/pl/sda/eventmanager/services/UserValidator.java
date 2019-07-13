@@ -1,6 +1,5 @@
 package pl.sda.eventmanager.services;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -32,7 +31,7 @@ public class UserValidator implements Validator {
         User user = User.UserBuilder
                 .anUser()
                 .withEmail(registerForm.getEmail())
-                .withUsername(registerForm.getUsername())
+                .withNickname(registerForm.getNickname())
                 .withPassword(registerForm.getPassword())
                 .withConfirmPassword(registerForm.getConfirmPassword())
                 .build();
@@ -45,12 +44,12 @@ public class UserValidator implements Validator {
             errors.rejectValue("email", "NotEmail", "Please use proper email address.");
         }
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "NotEmpty", "All fields are required.");
-        if (userService.findByUsername(user.getUsername()) != null) {
-            errors.rejectValue("username", "Duplicate.registerForm.username", "Username taken. Please choose another username.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickname", "NotEmpty", "All fields are required.");
+        if (userService.findByNickname(user.getNickname()) != null) {
+            errors.rejectValue("nickname", "Duplicate.registerForm.nickname", "Username taken. Please choose another nickname.");
         }
-        if (user.getUsername().length() < 3 || user.getUsername().length() > 50) {
-            errors.rejectValue("username", "Size.registerForm.username", "Please use between 3 and 50 characters.");
+        if (user.getNickname().length() < 3 || user.getNickname().length() > 50) {
+            errors.rejectValue("nickname", "Size.registerForm.nickname", "Please use between 3 and 50 characters.");
         }
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");

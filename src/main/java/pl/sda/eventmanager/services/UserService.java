@@ -45,12 +45,12 @@ public class UserService implements UserDetailsService {
         }
 
 
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+        return new org.springframework.security.core.userdetails.User(user.getNickname(),
                 user.getPassword(), grantedAuthorities);
     }
 
-    public User findByUsername(String username) {
-        return userRepository.findByUsername(username);
+    public User findByNickname(String nickname) {
+        return userRepository.findByNickname(nickname);
     }
 
     public User findByEmail(String email) {
@@ -58,11 +58,11 @@ public class UserService implements UserDetailsService {
     }
 
     @Transactional
-    public void save(String email, String username, String password, String confirmPassword) {
+    public void save(String email, String nickname, String password, String confirmPassword) {
 
         final User myUser = new User();
         myUser.setEmail(email);
-        myUser.setUsername(username);
+        myUser.setNickname(nickname);
         myUser.setPassword(passwordEncoder.encode(password));
         myUser.setConfirmPassword(confirmPassword);
         myUser.setRoles(new HashSet<>(roleRepository.findAll()));

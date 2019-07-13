@@ -19,7 +19,9 @@ public class IndexController {
     public ModelAndView get(Authentication auth) {
         ModelAndView modelAndView = new ModelAndView("index");
 
-        modelAndView.addObject("auth", ((UserDetails) auth.getPrincipal()).getUsername());
+//        if(auth != null){
+//        modelAndView.addObject("auth", ((UserDetails) auth.getPrincipal()).getUsername());}
+
         return modelAndView;
     }
 }
