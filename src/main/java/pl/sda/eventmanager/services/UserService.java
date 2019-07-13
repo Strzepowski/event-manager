@@ -33,20 +33,7 @@ public class UserService implements UserDetailsService {
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 
         User user = userRepository.findByEmail(email);
-
-        if (user == null) {
-            throw new UsernameNotFoundException("User " + email + " doesn't exist");
-        }
-
-        Set<SimpleGrantedAuthority> grantedAuthorities = new HashSet<>();
-
-        for (Role role : user.getRoles()) {
-            grantedAuthorities.add(new SimpleGrantedAuthority(role.getName()));
-        }
-
-
-        return new org.springframework.security.core.userdetails.User(user.getNickname(),
-                user.getPassword(), grantedAuthorities);
+        return user;
     }
 
     public User findByNickname(String nickname) {

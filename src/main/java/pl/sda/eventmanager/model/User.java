@@ -38,8 +38,6 @@ public class User implements UserDetails {
     private UserInfo userInfo;
 
 
-
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 

@@ -10,6 +10,7 @@ import java.util.Set;
 @Data
 @NoArgsConstructor
 public class Role {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

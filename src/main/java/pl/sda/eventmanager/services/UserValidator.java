@@ -18,7 +18,6 @@ public class UserValidator implements Validator {
 
     }
 
-
     @Override
     public boolean supports(Class<?> aClass) {
         return User.class.equals(aClass);
@@ -46,7 +45,7 @@ public class UserValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "nickname", "NotEmpty", "All fields are required.");
         if (userService.findByNickname(user.getNickname()) != null) {
-            errors.rejectValue("nickname", "Duplicate.registerForm.nickname", "Username taken. Please choose another nickname.");
+            errors.rejectValue("nickname", "Duplicate.registerForm.nickname", "Nickname taken. Please choose another nickname.");
         }
         if (user.getNickname().length() < 3 || user.getNickname().length() > 50) {
             errors.rejectValue("nickname", "Size.registerForm.nickname", "Please use between 3 and 50 characters.");
