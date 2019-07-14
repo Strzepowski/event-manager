@@ -1,11 +1,11 @@
 package pl.sda.eventmanager.services;
 
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.stereotype.Service;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
-import pl.sda.eventmanager.dto.LoginForm;
+        import org.springframework.security.crypto.password.PasswordEncoder;
+        import org.springframework.stereotype.Service;
+        import org.springframework.validation.Errors;
+        import org.springframework.validation.ValidationUtils;
+        import org.springframework.validation.Validator;
+        import pl.sda.eventmanager.dto.LoginForm;
 
 @Service
 public class LoginValidator implements Validator {

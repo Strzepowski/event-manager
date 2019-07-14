@@ -22,8 +22,12 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
     public void onApplicationEvent(ContextRefreshedEvent event) {
         if (!userService.findByEmail("admin").isPresent()) {
             RegisterForm adminForm = new RegisterForm();
+
+            // SET ADMIN LOGIN
             adminForm.setEmail("admin");
+            // SET ADMIN NICKNAME (SHOWN TO OTHER USERS)
             adminForm.setNickname("ADMIN");
+            // SET ADMIN PASSWORD
             adminForm.setPassword("admin");
             adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
