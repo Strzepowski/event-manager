@@ -30,7 +30,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                    .antMatchers("/", "/register", "/h2db/**", "/loginForm")
+                    .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm" )
                         .permitAll()
                     .antMatchers("/adminpanel")
                         .hasRole("ADMIN")
@@ -44,7 +44,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/", true)
-                    .failureForwardUrl("/login")
+                    .failureForwardUrl("/loginForm")
                         .permitAll()
 
                 .and()

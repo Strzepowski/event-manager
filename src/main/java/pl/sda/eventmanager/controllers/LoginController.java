@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.LoginForm;
 import pl.sda.eventmanager.services.LoginValidator;
-import pl.sda.eventmanager.services.RegisterValidator;
 
 @Controller
 public class LoginController {
@@ -20,7 +19,7 @@ public class LoginController {
     }
 
     @GetMapping("loginForm")
-    public ModelAndView loginGet() {
+    public ModelAndView loginFormGet() {
         return new ModelAndView("login", "loginForm", new LoginForm());
     }
 
