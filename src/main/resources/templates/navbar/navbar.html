@@ -6,9 +6,9 @@
 
     <div sec:authorize="isAnonymous()">
         <div class="nav-item">
-            <form action="/login">
-                <button class="btn btn-success ml-auto mr-1">Login</button>
-            </form>
+
+                <a class="btn btn-success ml-auto mr-1" href="/loginForm">Login</a>
+
         </div>
     </div>
     <div sec:authorize="isAnonymous()">

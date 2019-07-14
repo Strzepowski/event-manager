@@ -30,14 +30,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                    .antMatchers("/", "/register", "/h2db/**")
+                    .antMatchers("/", "/register", "/h2db/**", "/loginForm")
                     .permitAll()
                     .anyRequest()
                     .fullyAuthenticated()
 
                 .and()
                     .formLogin()
-                    .loginPage("/login")
+                    .loginProcessingUrl("/login")
+//                    .loginPage("/loginFom")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/", true)

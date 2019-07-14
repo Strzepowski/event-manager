@@ -1,5 +1,6 @@
 package pl.sda.eventmanager.services;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -10,9 +11,11 @@ import pl.sda.eventmanager.dto.LoginForm;
 public class LoginValidator implements Validator {
 
     private final UserService userService;
+    private final PasswordEncoder passwordEncoder;
 
-    public LoginValidator(UserService userService) {
+    public LoginValidator(UserService userService, PasswordEncoder passwordEncoder) {
         this.userService = userService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -32,7 +35,7 @@ public class LoginValidator implements Validator {
             errors.rejectValue("email", "WrongEmailOrPassword", "Wrong email or password.");
         } else {
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");
-            if (!userService.findByEmail(loginForm.getEmail()).get().getPassword().equals(loginForm.getPassword())) {
+            if (!passwordEncoder.matches(loginForm.getPassword(), userService.findByEmail(loginForm.getEmail()).get().getPassword())) {
                 errors.rejectValue("password", "WrongEmailOrPassword", "Wrong email or password.");
             }
         }
