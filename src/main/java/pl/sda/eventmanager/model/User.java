@@ -6,9 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Data
@@ -34,8 +35,21 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return Collections.singletonList(new SimpleGrantedAuthority(Role.USER.name()));
+        List<SimpleGrantedAuthority> organiserAuthorityList = new ArrayList<>();
+        organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
+        organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()));
+
+        List<SimpleGrantedAuthority> adminAuthorityList = organiserAuthorityList;
+        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()));
+
+        if (role == Role.ROLE_ORGANISER) {
+            return Collections.unmodifiableList(organiserAuthorityList);
+        } else if (role == Role.ROLE_ADMIN) {
+            return Collections.unmodifiableList(adminAuthorityList);
+        }
+        return Collections.singletonList(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
     }
+
 
     @Override
     public String getUsername() {

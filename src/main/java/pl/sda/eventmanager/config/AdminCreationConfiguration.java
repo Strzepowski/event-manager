@@ -1,8 +1,6 @@
 package pl.sda.eventmanager.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
@@ -27,7 +25,7 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
             adminForm.setEmail("admin");
             adminForm.setNickname("ADMIN");
             adminForm.setPassword("admin");
-            adminForm.setRole(Role.ADMIN);
+            adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
             log.info("Admin account created.");
         }

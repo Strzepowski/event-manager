@@ -1,7 +1,7 @@
 package pl.sda.eventmanager.model;
 
 public enum Role {
-    USER,
-    ORGANISER,
-    ADMIN
+    ROLE_USER,
+    ROLE_ORGANISER,
+    ROLE_ADMIN
 }

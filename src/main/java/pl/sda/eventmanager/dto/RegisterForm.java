@@ -10,5 +10,5 @@ public class RegisterForm {
     private String nickname;
     private String password;
     private String confirmPassword;
-    private Role role = Role.USER;
+    private Role role = Role.ROLE_USER;
 }
