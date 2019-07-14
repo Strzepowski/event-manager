@@ -31,19 +31,21 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
 
                     .antMatchers("/", "/register", "/h2db/**", "/loginForm")
-                    .permitAll()
+                        .permitAll()
+                    .antMatchers("/adminpanel")
+                        .hasRole("ADMIN")
                     .anyRequest()
-                    .fullyAuthenticated()
+                        .fullyAuthenticated()
+
 
                 .and()
                     .formLogin()
                     .loginProcessingUrl("/login")
-//                    .loginPage("/loginFom")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/", true)
                     .failureForwardUrl("/login")
-                    .permitAll()
+                        .permitAll()
 
                 .and()
                     .logout()
@@ -51,7 +53,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true)
                     .clearAuthentication(true)
                     .logoutSuccessUrl("/")
-                    .permitAll()
+                        .permitAll()
+
 
                 .and()
                     .userDetailsService(userDetailsService);
