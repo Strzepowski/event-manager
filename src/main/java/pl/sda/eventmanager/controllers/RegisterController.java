@@ -8,17 +8,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.services.UserService;
-import pl.sda.eventmanager.services.UserValidator;
+import pl.sda.eventmanager.services.RegisterValidator;
 
 @Controller
 public class RegisterController {
 
     private final UserService userService;
-    private final UserValidator userValidator;
+    private final RegisterValidator registerValidator;
 
-    public RegisterController(UserService userService, UserValidator userValidator) {
+    public RegisterController(UserService userService, RegisterValidator registerValidator) {
         this.userService = userService;
-        this.userValidator = userValidator;
+        this.registerValidator = registerValidator;
     }
 
     @GetMapping("register")
@@ -29,7 +29,7 @@ public class RegisterController {
     @PostMapping("register")
     public ModelAndView registerPost(@ModelAttribute RegisterForm registerForm, BindingResult bindingResult) {
 
-        userValidator.validate(registerForm, bindingResult);
+        registerValidator.validate(registerForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("register");

@@ -7,15 +7,16 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.LoginForm;
-import pl.sda.eventmanager.services.UserValidator;
+import pl.sda.eventmanager.services.LoginValidator;
+import pl.sda.eventmanager.services.RegisterValidator;
 
 @Controller
 public class LoginController {
 
-    private final UserValidator userValidator;
+    private final LoginValidator loginValidator;
 
-    public LoginController(UserValidator userValidator) {
-        this.userValidator = userValidator;
+    public LoginController(LoginValidator loginValidator) {
+        this.loginValidator = loginValidator;
     }
 
     @GetMapping("login")
@@ -26,7 +27,7 @@ public class LoginController {
     @PostMapping("login")
     public ModelAndView loginPost(@ModelAttribute LoginForm loginForm, BindingResult bindingResult) {
 
-        userValidator.validateLogin(loginForm, bindingResult);
+        loginValidator.validate(loginForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("login");
