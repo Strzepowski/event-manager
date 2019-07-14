@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -31,36 +30,34 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                .antMatchers("/", "/register", "/h2db/**")
-                .permitAll()
-                .anyRequest()
-                .fullyAuthenticated()
+                    .antMatchers("/", "/register", "/h2db/**")
+                    .permitAll()
+                    .anyRequest()
+                    .fullyAuthenticated()
 
                 .and()
-                .formLogin()
-                .loginPage("/login")
-                .usernameParameter("email")
-                .passwordParameter("password")
-                .defaultSuccessUrl("/", true)
-                .failureForwardUrl("/login")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login")
+                    .usernameParameter("email")
+                    .passwordParameter("password")
+                    .defaultSuccessUrl("/", true)
+                    .failureForwardUrl("/login")
+                    .permitAll()
 
                 .and()
-                .logout()
-                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .invalidateHttpSession(true)
-                .clearAuthentication(true)
-                .logoutSuccessUrl("/")
-                .permitAll()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .logoutSuccessUrl("/")
+                    .permitAll()
 
                 .and()
-                .userDetailsService(userDetailsService);
+                    .userDetailsService(userDetailsService);
 
-
-        //H2
+//        //H2
         http.csrf().disable();
         http.headers().frameOptions().disable();
-
     }
 
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
@@ -72,6 +69,4 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
-
-
 }

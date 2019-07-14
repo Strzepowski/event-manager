@@ -23,7 +23,6 @@ public class RegisterController {
 
     @GetMapping("register")
     public ModelAndView registerGet() {
-
         return new ModelAndView("register", "registerForm", new RegisterForm());
     }
 
@@ -38,7 +37,7 @@ public class RegisterController {
             return modelAndView;
         }
 
-        userService.save(registerForm.getEmail(), registerForm.getNickname(), registerForm.getPassword(), registerForm.getConfirmPassword(), registerForm.getRole());
+        userService.saveUser(registerForm);
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("accountCreated", registerForm.getEmail());

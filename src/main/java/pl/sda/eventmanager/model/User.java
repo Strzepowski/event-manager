@@ -1,6 +1,5 @@
 package pl.sda.eventmanager.model;
 
-
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -26,15 +25,11 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
     @Column(nullable = false)
-    @Transient
-    private String confirmPassword;
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private UserInfo userInfo;
-
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -68,11 +63,9 @@ public class User implements UserDetails {
     }
 
     public static final class UserBuilder {
-        private Long id;
         private String email;
         private String nickname;
         private String password;
-        private String confirmPassword;
         private Role role;
         private UserInfo userInfo;
 
@@ -83,11 +76,6 @@ public class User implements UserDetails {
             return new UserBuilder();
         }
 
-        public UserBuilder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
         public UserBuilder withEmail(String email) {
             this.email = email;
             return this;
@@ -95,11 +83,6 @@ public class User implements UserDetails {
 
         public UserBuilder withPassword(String password) {
             this.password = password;
-            return this;
-        }
-
-        public UserBuilder withConfirmPassword(String confirmPassword) {
-            this.confirmPassword = confirmPassword;
             return this;
         }
 
@@ -120,11 +103,9 @@ public class User implements UserDetails {
 
         public User build() {
             User user = new User();
-            user.setId(id);
             user.setEmail(email);
             user.setNickname(nickname);
             user.setPassword(password);
-            user.setConfirmPassword(confirmPassword);
             user.setRole(role);
             user.setUserInfo(userInfo);
             return user;

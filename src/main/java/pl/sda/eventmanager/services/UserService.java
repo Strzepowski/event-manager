@@ -6,10 +6,11 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import pl.sda.eventmanager.model.Role;
+import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.model.User;
 import pl.sda.eventmanager.repositories.UserRepository;
 
+import java.util.Optional;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -25,30 +26,32 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+        if(userRepository.findByEmail(email).isPresent())
+            return userRepository.findByEmail(email).get();
 
-        User user = userRepository.findByEmail(email);
-        return user;
+        throw new UsernameNotFoundException(email + " not found in database");
     }
 
-    public User findByNickname(String nickname) {
+    public Optional<User> findByNickname(String nickname) {
         return userRepository.findByNickname(nickname);
     }
 
-    public User findByEmail(String email) {
+    public Optional<User> findByEmail(String email) {
         return userRepository.findByEmail(email);
     }
 
     @Transactional
-    public void save(String email, String nickname, String password, String confirmPassword, Role role) {
+    public void saveUser(RegisterForm registerForm) {
 
-        final User myUser = new User();
-        myUser.setEmail(email);
-        myUser.setNickname(nickname);
-        myUser.setPassword(passwordEncoder.encode(password));
-        myUser.setConfirmPassword(confirmPassword);
-        myUser.setRole(role);
+        final User myUser = User.UserBuilder
+                .anUser()
+                .withEmail(registerForm.getEmail())
+                .withNickname(registerForm.getNickname())
+                .withPassword(passwordEncoder.encode(registerForm.getPassword()))
+                .withRole(registerForm.getRole())
+                .build();
+
         userRepository.save(myUser);
-
     }
 
 }
