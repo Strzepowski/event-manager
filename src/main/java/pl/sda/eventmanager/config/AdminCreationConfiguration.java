@@ -32,6 +32,21 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
             adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
             log.info("Admin account created.");
+
+
+            // FOR TESTING PURPOSES
+            RegisterForm userForm = new RegisterForm();
+            userForm.setEmail("user@user.user");
+            userForm.setNickname("User");
+            userForm.setPassword("useruser");
+            userForm.setRole(Role.ROLE_USER);
+            userService.saveUser(userForm);
+            RegisterForm organiserForm = new RegisterForm();
+            organiserForm.setEmail("organiser@organiser.organiser");
+            organiserForm.setNickname("Organiser");
+            organiserForm.setPassword("organiser");
+            organiserForm.setRole(Role.ROLE_ORGANISER);
+            userService.saveUser(organiserForm);
         }
     }
 }

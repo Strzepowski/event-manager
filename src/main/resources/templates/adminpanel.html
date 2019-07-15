@@ -30,27 +30,39 @@
     <tr>
         <th scope="col">ID</th>
         <th scope="col">Email</th>
+        <th></th>
         <th scope="col">Nickname</th>
-        <th scope="col">BCryptPassword</th>
+        <th></th>
+        <th></th>
         <th scope="col">ROLE</th>
+        <th></th>
+        <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${allUsers}">
         <td><span th:text="${user.id}"></span></td>
         <td><span th:text="${user.email}"></span></td>
+        <td><a class="btn btn-success mr-1"
+               href="#">CHANGE EMAIL</a></td>
         <td><span th:text="${user.nickname}"></span></td>
-        <td><span th:text="${user.password}"></span></td>
-        <td><span th:text="${user.role}"></span></td>
+        <td><a class="btn btn-success mr-1"
+               href="#">CHANGE NICKNAME</a></td>
+        <td><a class="btn btn-success mr-1"
+                href="#">CHANGE PASSWORD</a></td>
+        <td><span th:text="${user.role}">User.Role</span></td>
+        <td><span th:if="${user.role==T(pl.sda.eventmanager.model.Role).ROLE_USER}">
+                <a class="btn btn-success mr-1"
+                   href="#">UPGRADE ROLE</a></span>
+            <span th:if="${user.role==T(pl.sda.eventmanager.model.Role).ROLE_ORGANISER}">
+                <a class="btn btn-success mr-1"
+                   href="#">DOWNGRADE ROLE</a></span></td>
+        <td><a class="btn btn-success mr-1"
+               href="#">DELETE ACCOUNT</a></td>
+
 
         <!--  //TODO buttons not appearing -->
 
-        <td th:if="${user.role == 'ROLE_USER'}">
-            <a class="btn">UPGRADE ROLE</a>
-        </td>
-        <td th:if="${user.role == 'ROLE_ORGANISER'}">
-            <a class="btn">DOWNGRADE ROLE</a>
-        </td>
     </tbody>
 </table>
 
