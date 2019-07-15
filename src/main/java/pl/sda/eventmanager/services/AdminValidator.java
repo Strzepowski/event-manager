@@ -27,11 +27,11 @@ public class AdminValidator implements Validator {
     public void validate(Object o, Errors errors) {
         LoginForm loginForm = (LoginForm) o;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "All fields are required.");
-        if (!loginForm.getEmail().equals("admin")) {
-            errors.rejectValue("email", "NotEmail", "Please use proper email address.");
-        }
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "All fields are required.");
+//        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "NotEmpty", "All fields are required.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "NotEmpty", "Please use proper email address.");
+//        if (!loginForm.getEmail().equals("admin")) {
+//            errors.rejectValue("email", "NotEmail", "Please use proper email address.");
+//        }
         if (!passwordEncoder.matches(loginForm.getPassword(), userService.findByEmail(loginForm.getEmail()).get().getPassword())) {
             errors.rejectValue("password", "WrongEmailOrPassword", "Please use proper email address.");
         }

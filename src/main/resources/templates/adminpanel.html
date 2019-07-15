@@ -44,12 +44,12 @@
         <td><span th:text="${user.role}"></span></td>
 
         <!--  //TODO buttons not appearing -->
-        
+
         <td th:if="${user.role == 'ROLE_USER'}">
-            <button>UPGRADE ROLE</button>
+            <a class="btn">UPGRADE ROLE</a>
         </td>
         <td th:if="${user.role == 'ROLE_ORGANISER'}">
-            <button>DOWNGRADE ROLE</button>
+            <a class="btn">DOWNGRADE ROLE</a>
         </td>
     </tbody>
 </table>

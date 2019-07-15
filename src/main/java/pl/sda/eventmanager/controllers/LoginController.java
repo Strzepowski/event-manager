@@ -21,8 +21,9 @@ public class LoginController {
         this.adminValidator = adminValidator;
     }
 
-//    @GetMapping("login")
-//    public ModelAndView loginGet(){return new ModelAndView("login", "loginForm", new LoginForm());}
+    @GetMapping("login")
+    public ModelAndView loginGet(){return new ModelAndView("login", "loginForm", new LoginForm());}
+
 
     @GetMapping("loginForm")
     public ModelAndView loginFormGet() {
@@ -30,7 +31,7 @@ public class LoginController {
     }
 
     @PostMapping("loginForm")
-    public ModelAndView loginPost(@ModelAttribute LoginForm loginForm, BindingResult bindingResult) {
+    public ModelAndView loginFormPost(@ModelAttribute LoginForm loginForm, BindingResult bindingResult) {
 
         if(loginForm.getEmail().equals("admin")){
         adminValidator.validate(loginForm, bindingResult);
