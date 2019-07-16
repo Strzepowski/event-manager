@@ -32,7 +32,7 @@ public class EventController {
         eventValidator.validate(eventForm, bindingResult);
 
         if (bindingResult.hasErrors()){
-            ModelAndView modelAndView = new ModelAndView("addEvent");
+            ModelAndView modelAndView = new ModelAndView("addevent");
             modelAndView.addObject("error", bindingResult.getFieldError().getDefaultMessage());
             return modelAndView;
         }
