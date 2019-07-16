@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.model.User;
+import pl.sda.eventmanager.model.UserInfo;
 import pl.sda.eventmanager.repositories.UserRepository;
 
+import javax.swing.*;
 import java.util.Optional;
 
 @Service
@@ -49,6 +51,7 @@ public class UserService implements UserDetailsService {
                 .withNickname(registerForm.getNickname())
                 .withPassword(passwordEncoder.encode(registerForm.getPassword()))
                 .withRole(registerForm.getRole())
+                .withUserInfo(new UserInfo())
                 .build();
 
         userRepository.save(myUser);

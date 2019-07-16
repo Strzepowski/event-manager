@@ -32,6 +32,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                     .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm" )
                         .permitAll()
+                    .antMatchers("/addEvent")
+                .hasRole("ORGANISER")
                     .antMatchers("/adminpanel")
                         .hasRole("ADMIN")
                     .anyRequest()

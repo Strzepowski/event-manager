@@ -4,14 +4,9 @@ import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import pl.sda.eventmanager.config.PasswordEncoderConfiguration;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 @Entity
 @Data
@@ -31,7 +26,16 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Event> organisedEvents = new HashSet<>();
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_EVENT",
+            joinColumns = {@JoinColumn(name = "EVENT_ID", nullable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "USER_ID", nullable = false)})
+    private Set<Event> attendedEvents = new HashSet<>();
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserInfo userInfo;
 
     @Override
@@ -41,13 +45,15 @@ public class User implements UserDetails {
         organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
         organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()));
 
-        List<SimpleGrantedAuthority> adminAuthorityList = organiserAuthorityList;
+        List<SimpleGrantedAuthority> adminAuthorityList = new ArrayList<>();
+        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
+        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()));
         adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()));
 
         if (role == Role.ROLE_ORGANISER) {
-            return Collections.unmodifiableList(organiserAuthorityList);
+            return organiserAuthorityList;
         } else if (role == Role.ROLE_ADMIN) {
-            return Collections.unmodifiableList(adminAuthorityList);
+            return adminAuthorityList;
         }
         return Collections.singletonList(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
     }
@@ -78,11 +84,14 @@ public class User implements UserDetails {
         return true;
     }
 
+
     public static final class UserBuilder {
+        private Long id;
         private String email;
         private String nickname;
         private String password;
         private Role role;
+        private Set<Event> organisedEvents = new HashSet<>();
         private UserInfo userInfo;
 
         private UserBuilder() {
@@ -92,13 +101,13 @@ public class User implements UserDetails {
             return new UserBuilder();
         }
 
-        public UserBuilder withEmail(String email) {
-            this.email = email;
+        public UserBuilder withId(Long id) {
+            this.id = id;
             return this;
         }
 
-        public UserBuilder withPassword(String password) {
-            this.password = password;
+        public UserBuilder withEmail(String email) {
+            this.email = email;
             return this;
         }
 
@@ -107,8 +116,18 @@ public class User implements UserDetails {
             return this;
         }
 
+        public UserBuilder withPassword(String password) {
+            this.password = password;
+            return this;
+        }
+
         public UserBuilder withRole(Role role) {
             this.role = role;
+            return this;
+        }
+
+        public UserBuilder withOrganisedEvents(Set<Event> organisedEvents) {
+            this.organisedEvents = organisedEvents;
             return this;
         }
 
@@ -119,10 +138,12 @@ public class User implements UserDetails {
 
         public User build() {
             User user = new User();
+            user.setId(id);
             user.setEmail(email);
             user.setNickname(nickname);
             user.setPassword(password);
             user.setRole(role);
+            user.setOrganisedEvents(organisedEvents);
             user.setUserInfo(userInfo);
             return user;
         }

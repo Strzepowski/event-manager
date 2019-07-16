@@ -26,6 +26,18 @@
 <div th:if="${accountCreated != null}">
     <p>Created account for: <span th:text="${accountCreated}">.</span></p>
 </div>
+<div th:if="${eventAdded != null}">
+    <p><span th:text="${eventAdded}"></span> event created.</p>
+</div>
+
+<!-- Lista wydarzeń
+- na stronie głównej, w centralnej części należy umieścić listę wszystkich aktualnych wydarzeń
+- każdy element listy powinien zawierać:
+- wyróżniony nagłówek z tytułem wydarzenia,
+- datę od/do wydarzenia,
+- pierwsze 50 znaków opisu.
+- wydarzenia powinny być posortowane od najbliższego.-->
+
 
 
 
