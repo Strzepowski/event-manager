@@ -37,12 +37,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .anyRequest()
                         .fullyAuthenticated()
 
-
                 .and()
                     .formLogin()
-                .loginPage("/login")
+                    .loginPage("/login")
                     .loginProcessingUrl("/loginForm")
-//                .successForwardUrl("/")
                     .usernameParameter("email")
                     .passwordParameter("password")
                     .defaultSuccessUrl("/", true)
@@ -56,7 +54,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .clearAuthentication(true)
                     .logoutSuccessUrl("/")
                         .permitAll()
-
 
                 .and()
                     .userDetailsService(userDetailsService);
