@@ -3,6 +3,7 @@ package pl.sda.eventmanager.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -15,24 +16,28 @@ import java.util.Set;
 public class Event {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.TABLE)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "USER_ID")
+    private User eventOrganiser;
 
     @Column(nullable = false, unique = true)
     private String eventName;
     @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventStart;
     @Column(nullable = false)
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventEnd;
     @Column(nullable = false)
     private String eventDescription;
 
-    @ManyToOne
-    @JoinColumn(name = "USER_ID")
-    private User eventOrganiser;
-
     @ManyToMany(mappedBy = "attendedEvents")
     private Set<User> eventAttendants;
+
+
 
     public static final class EventBuilder {
         private Long Id;

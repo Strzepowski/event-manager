@@ -11,7 +11,7 @@ import java.time.LocalDate;
 public class UserInfo {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @OneToOne
     @JoinColumn(name = "USER_ID")

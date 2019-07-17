@@ -23,6 +23,8 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
         if (!userService.findByEmail("admin").isPresent()) {
             RegisterForm adminForm = new RegisterForm();
 
+            //TODO IS THIS GOOD PLACE TO SET ADMIN LOGIN INFO?
+
             // SET ADMIN LOGIN
             adminForm.setEmail("admin");
             // SET ADMIN NICKNAME (SHOWN TO OTHER USERS)
@@ -34,7 +36,7 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
             log.info("Admin account created.");
 
 
-            // FOR TESTING PURPOSES
+            // TODO FOR TESTING PURPOSES
             RegisterForm userForm = new RegisterForm();
             userForm.setEmail("user@user.user");
             userForm.setNickname("User");

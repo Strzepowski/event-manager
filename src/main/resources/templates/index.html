@@ -30,16 +30,28 @@
     <p><span th:text="${eventAdded}"></span> event created.</p>
 </div>
 
-<!-- Lista wydarzeń
-- na stronie głównej, w centralnej części należy umieścić listę wszystkich aktualnych wydarzeń
-- każdy element listy powinien zawierać:
-- wyróżniony nagłówek z tytułem wydarzenia,
-- datę od/do wydarzenia,
-- pierwsze 50 znaków opisu.
-- wydarzenia powinny być posortowane od najbliższego.-->
+<div th:if="${events.isEmpty()}">
+    <div>No current events.</div>
+</div>
+<div th:each="event : ${events}">
+    <p></p>
+    <div class="card text-center">
+        <div class="card-header">
+            <span>Posted by: <span th:text="${event.eventOrganiser}">NICKNAME</span></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><strong th:text="${event.eventName}">EVENT TITLE</strong></h5>
+            <p class="card-text">
+                <span th:text="${#strings.abbreviate(event.eventDescription,50)}">DESCRIPTION
+                50 CHARACTERS</span></p>
+        </div>
+        <div class="card-footer text-muted">
+            <p>Starts: <span th:text="${#temporals.format(event.eventStart, 'dd-MM-yyyy HH:mm')}">START DATE</span></p>
+            <p>Ends: <span th:text="${#temporals.format(event.eventEnd, 'dd-MM-yyyy HH:mm')}">END DATE</span></p>
+        </div>
+    </div>
 
-
-
+</div>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->

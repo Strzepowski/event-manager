@@ -11,12 +11,13 @@ import pl.sda.eventmanager.services.EventService;
 import pl.sda.eventmanager.services.EventValidator;
 
 @Controller
-public class EventController {
+public class EventController extends IndexListController {
 
     private final EventValidator eventValidator;
     private final EventService eventService;
 
     public EventController(EventValidator eventValidator, EventService eventService) {
+        super(eventService);
         this.eventValidator = eventValidator;
         this.eventService = eventService;
     }
@@ -41,6 +42,7 @@ public class EventController {
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("eventAdded", eventForm.getEventName());
+        modelAndView.addObject("events", getEventList());
         return modelAndView;
     }
 }

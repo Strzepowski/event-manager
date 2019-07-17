@@ -37,6 +37,8 @@ public class LoginController {
         adminValidator.validate(loginForm, bindingResult);
         } else loginValidator.validate(loginForm, bindingResult);
 
+        //TODO NAVBAR BUTTONS DISAPPEARING
+
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("login");
             modelAndView.addObject("error", bindingResult.getFieldError().getDefaultMessage());

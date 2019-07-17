@@ -7,16 +7,18 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.RegisterForm;
+import pl.sda.eventmanager.services.EventService;
 import pl.sda.eventmanager.services.UserService;
 import pl.sda.eventmanager.services.RegisterValidator;
 
 @Controller
-public class RegisterController {
+public class RegisterController extends IndexListController {
 
     private final UserService userService;
     private final RegisterValidator registerValidator;
 
-    public RegisterController(UserService userService, RegisterValidator registerValidator) {
+    public RegisterController(UserService userService, RegisterValidator registerValidator, EventService eventService) {
+        super(eventService);
         this.userService = userService;
         this.registerValidator = registerValidator;
     }
@@ -41,7 +43,7 @@ public class RegisterController {
 
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("accountCreated", registerForm.getEmail());
-
+        modelAndView.addObject("events", getEventList());
         return modelAndView;
     }
 }

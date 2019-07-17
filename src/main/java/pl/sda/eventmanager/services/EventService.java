@@ -7,15 +7,22 @@ import pl.sda.eventmanager.dto.EventForm;
 import pl.sda.eventmanager.model.Event;
 import pl.sda.eventmanager.model.User;
 import pl.sda.eventmanager.repositories.EventRepository;
+import pl.sda.eventmanager.repositories.UserRepository;
 
+import java.time.LocalDateTime;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class EventService {
 
+    private final UserRepository userRepository;
     private final EventRepository eventRepository;
 
-    public EventService(EventRepository eventRepository) {
+    public EventService(UserRepository userRepository, EventRepository eventRepository) {
+        this.userRepository = userRepository;
         this.eventRepository = eventRepository;
     }
 
@@ -23,18 +30,31 @@ public class EventService {
         return eventRepository.findByEventName(eventName);
     }
 
+    public List<Event> findAllOngoingAndFutureEvents() {
+        return eventRepository.findAll();
+    }
+
     @Transactional
     public void addEvent(EventForm eventForm) {
-        eventForm.setEventOrganiser((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal());
         final Event myEvent = Event.EventBuilder
                 .anEvent()
                 .withEventName(eventForm.getEventName())
                 .withEventStart(eventForm.getEventStart())
                 .withEventEnd(eventForm.getEventEnd())
                 .withEventDescription(eventForm.getEventDescription())
-                .withEventOrganiser(eventForm.getEventOrganiser())
+                .withEventOrganiser(userRepository.findByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail()).get())
                 .build();
 
         eventRepository.save(myEvent);
+    }
+
+    //TODO LIST IS NOT SORTED ON "/"
+
+    public List<Event> sortEventList(List<Event> events) {
+        events.stream()
+                .filter(x -> x.getEventEnd().isAfter(LocalDateTime.now()))
+                .sorted(Comparator.comparing(Event::getEventEnd).reversed())
+                .collect(Collectors.toList());
+        return events;
     }
 }

@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private Set<Event> organisedEvents = new HashSet<>();
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -37,6 +37,11 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserInfo userInfo;
+
+    @Override
+    public String toString() {
+        return nickname;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

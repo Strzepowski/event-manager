@@ -2,6 +2,7 @@ package pl.sda.eventmanager.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.security.core.context.SecurityContextHolder;
 import pl.sda.eventmanager.model.User;
 
 import java.time.LocalDateTime;
@@ -15,7 +16,6 @@ public class EventForm {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventEnd;
     private String eventDescription;
-    private User eventOrganiser;
 
 
 }
