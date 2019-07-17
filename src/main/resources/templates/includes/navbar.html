@@ -1,46 +1,130 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark"
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark"
      xmlns:th="http://www.thymeleaf.org"
      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
-    <a class="navbar-brand justify-content-start"
-       href="/">Event Manager</a>
+    <div class="d-flex justify-content-between">
+        <a class="navbar-brand ml-auto"
+           href="/">Event Manager</a>
 
-    <div sec:authorize="isAnonymous()">
-        <div class="nav-item">
-            <a class="btn btn-success ml-auto mr-1"
-               href="/loginForm">Login</a>
+        <!-- Search form -->
+        <!-- //TODO search criteria   -->
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2"
+                   type="search"
+                   placeholder="Search for events"
+                   aria-label="Search">
+            <button class="btn btn-success mr-sm-2"
+                    type="submit">Search
+            </button>
+        </form>
+        <!-- Burger menu inside -->
+        <div class="collapse navbar-collapse"
+             id="navbarSupportedContent">
+            <div class="navbar-nav">
+                <div sec:authorize="isAnonymous()">
+                    <div class="nav-item">
+                        <a class="btn btn-success mr-sm-2"
+                           href="/loginForm">Login</a>
+                    </div>
+                </div>
+                <div sec:authorize="hasRole('ROLE_ADMIN')">
+                    <div class="nav-item dropdown">
+                        <a class="btn btn-success mr-sm-2 dropdown-toggle"
+                           href="#"
+                           id="navbarDropdown"
+                           role="button"
+                           data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">
+                            Admin Panel
+                        </a>
+                        <div class="dropdown-menu"
+                             aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item"
+                               href="/adminpanelusers">Users Panel</a>
+                            <div class="dropdown-divider"></div>
+                            <!-- //TODO-->
+                            <a class="dropdown-item"
+                               href="#">Events Panel</a>
+                        </div>
+                    </div>
+                </div>
+                <div sec:authorize="hasAnyRole('ROLE_ORGANISER', 'ROLE_ADMIN')">
+                    <div class="nav-item">
+                        <a class="btn btn-success mr-sm-2"
+                           href="/addEvent">Add Event</a>
+                    </div>
+                </div>
+                <div sec:authorize="isAnonymous() or hasRole('ROLE_ADMIN')">
+                    <div class="nav-item">
+                        <a class="btn btn-success mr-sm-2"
+                           href="/register">Register</a>
+                    </div>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <div class="nav-item">
+                        <a class="btn btn-success mr-sm-2"
+                           href="#">Logged as: <span sec:authentication="name">Logged user</span></a>
+                    </div>
+                </div>
+                <div sec:authorize="isAuthenticated()">
+                    <div class="nav-item">
+                        <a class="btn btn-success mr-sm-2"
+                           href="/logout">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div sec:authorize="hasRole('ROLE_ADMIN')">
-        <a class="btn btn-success mr-1"
-           href="/adminpanel">ADMIN PANEL</a>
-    </div>
-
-    <div sec:authorize="hasAnyRole('ROLE_ORGANISER', 'ROLE_ADMIN')" >
-        <div class="nav-item">
-            <a class="btn btn-success mr-1"
-               href="/addEvent">Add Event</a>
-        </div>
-    </div>
-
-    <div sec:authorize="isAnonymous() or hasRole('ROLE_ADMIN')" >
-        <div class="nav-item">
-            <a class="btn btn-success mr-1"
-               href="/register">Register</a>
-        </div>
-    </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <div class="nav-item">
-            <a class="btn btn-success mr-1"
-               href="#">Logged as: <span sec:authentication="name">Logged user</span></a>
-        </div>
-    </div>
-
-    <div sec:authorize="isAuthenticated()">
-        <div class="nav-item">
-            <a class="btn btn-success mr-1"
-               href="/logout">Logout</a>
-        </div>
+        <!-- Burger Toggler -->
+        <button class="navbar-toggler"
+                type="button"
+                data-toggle="collapse"
+                data-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
     </div>
 </nav>
+
+
+<!--
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+    <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Left</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="//codeply.com">Codeply</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>
+    <div class="mx-auto order-0">
+        <a class="navbar-brand mx-auto" href="#">Navbar 2</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+-->

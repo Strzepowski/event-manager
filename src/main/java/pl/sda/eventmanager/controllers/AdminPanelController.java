@@ -3,21 +3,21 @@ package pl.sda.eventmanager.controllers;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
-import pl.sda.eventmanager.services.AdminPanelService;
+import pl.sda.eventmanager.services.AdminPanelUsersService;
 
 @Controller
 public class AdminPanelController {
 
-    private final AdminPanelService adminPanelService;
+    private final AdminPanelUsersService adminPanelUsersService;
 
-    public AdminPanelController(AdminPanelService adminPanelService) {
-        this.adminPanelService = adminPanelService;
+    public AdminPanelController(AdminPanelUsersService adminPanelUsersService) {
+        this.adminPanelUsersService = adminPanelUsersService;
     }
 
-    @GetMapping("adminpanel")
+    @GetMapping("adminpanelusers")
     public ModelAndView get() {
-        ModelAndView modelAndView = new ModelAndView("adminpanel");
-        modelAndView.addObject("allUsers", adminPanelService.findAll());
+        ModelAndView modelAndView = new ModelAndView("adminpanelusers");
+        modelAndView.addObject("allUsers", adminPanelUsersService.findAll());
         return modelAndView;
     }
 }

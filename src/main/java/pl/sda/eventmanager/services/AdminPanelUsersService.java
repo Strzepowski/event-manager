@@ -7,11 +7,11 @@ import pl.sda.eventmanager.repositories.UserRepository;
 import java.util.List;
 
 @Service
-public class AdminPanelService {
+public class AdminPanelUsersService {
 
     private final UserRepository userRepository;
 
-    public AdminPanelService(UserRepository userRepository) {
+    public AdminPanelUsersService(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
