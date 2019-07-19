@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.services.EventService;
 import pl.sda.eventmanager.services.UserService;
-import pl.sda.eventmanager.services.RegisterValidator;
+import pl.sda.eventmanager.services.validation.RegisterValidator;
 
 @Controller
 public class RegisterController extends IndexListController {

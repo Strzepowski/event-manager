@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.LoginForm;
-import pl.sda.eventmanager.services.AdminValidator;
-import pl.sda.eventmanager.services.LoginValidator;
+import pl.sda.eventmanager.services.validation.AdminValidator;
+import pl.sda.eventmanager.services.validation.LoginValidator;
 
 @Controller
 public class LoginController {

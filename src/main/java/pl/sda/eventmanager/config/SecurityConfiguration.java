@@ -30,12 +30,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                    .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm" )
-                        .permitAll()
-                    .antMatchers("/addEvent")
-                .hasRole("ORGANISER")
-                    .antMatchers("/adminpanel")
-                        .hasRole("ADMIN")
+                    .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm" ).permitAll()
+                    .antMatchers("/organiser/**").hasRole("ORGANISER")
+                    .antMatchers("/admin/**").hasRole("ADMIN")
                     .anyRequest()
                         .fullyAuthenticated()
 

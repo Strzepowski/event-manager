@@ -12,6 +12,7 @@ import pl.sda.eventmanager.model.UserInfo;
 import pl.sda.eventmanager.repositories.UserRepository;
 
 import javax.swing.*;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,10 +29,15 @@ public class UserService implements UserDetailsService {
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        if(userRepository.findByEmail(email).isPresent())
+        if (userRepository.findByEmail(email).isPresent()) {
             return userRepository.findByEmail(email).get();
+        }
 
         throw new UsernameNotFoundException(email + " not found in database");
+    }
+
+    public List<User> findAll(){
+        return userRepository.findAllByOrderById();
     }
 
     public Optional<User> findByNickname(String nickname) {
@@ -45,13 +51,12 @@ public class UserService implements UserDetailsService {
     @Transactional
     public void saveUser(RegisterForm registerForm) {
 
-        final User myUser = User.UserBuilder
-                .anUser()
-                .withEmail(registerForm.getEmail())
-                .withNickname(registerForm.getNickname())
-                .withPassword(passwordEncoder.encode(registerForm.getPassword()))
-                .withRole(registerForm.getRole())
-                .withUserInfo(new UserInfo())
+        final User myUser = User.builder()
+                .email(registerForm.getEmail())
+                .nickname(registerForm.getNickname())
+                .password(passwordEncoder.encode(registerForm.getPassword()))
+                .role(registerForm.getRole())
+                .userInfo(new UserInfo())
                 .build();
 
         userRepository.save(myUser);

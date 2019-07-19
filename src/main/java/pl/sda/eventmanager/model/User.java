@@ -1,6 +1,9 @@
 package pl.sda.eventmanager.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,6 +13,9 @@ import java.util.*;
 
 @Entity
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class User implements UserDetails {
 
     @Id
@@ -27,13 +33,13 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private Set<Event> organisedEvents = new HashSet<>();
+    private Set<Event> organisedEvents;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "USER_EVENT",
             joinColumns = {@JoinColumn(name = "EVENT_ID", nullable = false)},
             inverseJoinColumns = {@JoinColumn(name = "USER_ID", nullable = false)})
-    private Set<Event> attendedEvents = new HashSet<>();
+    private Set<Event> attendedEvents;
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserInfo userInfo;
@@ -46,19 +52,22 @@ public class User implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        List<SimpleGrantedAuthority> organiserAuthorityList = new ArrayList<>();
-        organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
-        organiserAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()));
+        final List<SimpleGrantedAuthority> ORGANISER_AUTHORITY_LIST
+                = Collections.unmodifiableList(Arrays.asList(
+                        (new SimpleGrantedAuthority(Role.ROLE_USER.name())),
+                        (new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()))));
 
-        List<SimpleGrantedAuthority> adminAuthorityList = new ArrayList<>();
-        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
-        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name()));
-        adminAuthorityList.add(new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()));
+        final List<SimpleGrantedAuthority> ADMIN_AUTHORITY_LIST
+                = Collections.unmodifiableList(Arrays.asList(
+                        (new SimpleGrantedAuthority(Role.ROLE_USER.name())),
+                        (new SimpleGrantedAuthority(Role.ROLE_ORGANISER.name())),
+                        (new SimpleGrantedAuthority(Role.ROLE_ADMIN.name()))));
+
 
         if (role == Role.ROLE_ORGANISER) {
-            return organiserAuthorityList;
+            return ORGANISER_AUTHORITY_LIST;
         } else if (role == Role.ROLE_ADMIN) {
-            return adminAuthorityList;
+            return ADMIN_AUTHORITY_LIST;
         }
         return Collections.singletonList(new SimpleGrantedAuthority(Role.ROLE_USER.name()));
     }
@@ -87,70 +96,5 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
-    }
-
-
-    public static final class UserBuilder {
-        private Long id;
-        private String email;
-        private String nickname;
-        private String password;
-        private Role role;
-        private Set<Event> organisedEvents = new HashSet<>();
-        private UserInfo userInfo;
-
-        private UserBuilder() {
-        }
-
-        public static UserBuilder anUser() {
-            return new UserBuilder();
-        }
-
-        public UserBuilder withId(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public UserBuilder withEmail(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public UserBuilder withNickname(String nickname) {
-            this.nickname = nickname;
-            return this;
-        }
-
-        public UserBuilder withPassword(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public UserBuilder withRole(Role role) {
-            this.role = role;
-            return this;
-        }
-
-        public UserBuilder withOrganisedEvents(Set<Event> organisedEvents) {
-            this.organisedEvents = organisedEvents;
-            return this;
-        }
-
-        public UserBuilder withUserInfo(UserInfo userInfo) {
-            this.userInfo = userInfo;
-            return this;
-        }
-
-        public User build() {
-            User user = new User();
-            user.setId(id);
-            user.setEmail(email);
-            user.setNickname(nickname);
-            user.setPassword(password);
-            user.setRole(role);
-            user.setOrganisedEvents(organisedEvents);
-            user.setUserInfo(userInfo);
-            return user;
-        }
     }
 }

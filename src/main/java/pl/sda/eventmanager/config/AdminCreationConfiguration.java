@@ -3,14 +3,17 @@ package pl.sda.eventmanager.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.model.Role;
 import pl.sda.eventmanager.services.UserService;
 
+import java.util.UUID;
+
 @Component
 @Slf4j
-public class AdminCreationConfiguration implements ApplicationListener<ContextRefreshedEvent> {
+public class AdminCreationConfiguration  {
 
     private final UserService userService;
 
@@ -18,22 +21,22 @@ public class AdminCreationConfiguration implements ApplicationListener<ContextRe
         this.userService = userService;
     }
 
-    @Override
-    public void onApplicationEvent(ContextRefreshedEvent event) {
+    @EventListener
+    public void handleContextRefresh(ContextRefreshedEvent event) {
         if (!userService.findByEmail("admin").isPresent()) {
             RegisterForm adminForm = new RegisterForm();
-
-            //TODO IS THIS GOOD PLACE TO SET ADMIN LOGIN INFO?
 
             // SET ADMIN LOGIN
             adminForm.setEmail("admin");
             // SET ADMIN NICKNAME (SHOWN TO OTHER USERS)
             adminForm.setNickname("ADMIN");
             // SET ADMIN PASSWORD
-            adminForm.setPassword("admin");
+            String password = UUID.randomUUID().toString();
+            adminForm.setPassword(password);
             adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
             log.info("Admin account created.");
+            log.info("Admin password: " + password);
 
 
             // TODO FOR TESTING PURPOSES

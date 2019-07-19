@@ -20,7 +20,7 @@ public class IndexListController {
     }
 
 
-    @ModelAttribute("eventList")
+    @ModelAttribute("events")
     public List<Event> getEventList() {
 
         List<Event> events = eventService.findAllOngoingAndFutureEvents();

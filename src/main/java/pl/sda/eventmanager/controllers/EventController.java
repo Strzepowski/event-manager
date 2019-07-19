@@ -5,12 +5,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.EventForm;
 import pl.sda.eventmanager.services.EventService;
-import pl.sda.eventmanager.services.EventValidator;
+import pl.sda.eventmanager.services.validation.EventValidator;
 
 @Controller
+@RequestMapping("/organiser")
 public class EventController extends IndexListController {
 
     private final EventValidator eventValidator;
@@ -22,13 +24,13 @@ public class EventController extends IndexListController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/addEvent")
+    @GetMapping("addevent")
     public ModelAndView addEventGet() {
         return new ModelAndView("addevent", "eventForm", new EventForm());
     }
 
 
-    @PostMapping("/addEvent")
+    @PostMapping("addevent")
     public ModelAndView addEventPost(@ModelAttribute EventForm eventForm, BindingResult bindingResult) {
         eventValidator.validate(eventForm, bindingResult);
 

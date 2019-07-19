@@ -11,4 +11,9 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findByEventName(String eventName);
     List<Event> findAll();
+
+    //all sorting related to objects stored in DB should be done using DB (for ex. replace with findBy..OrderByEventEndDesc)
+    List<Event> findAllBy
+
+
 }

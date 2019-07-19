@@ -36,13 +36,12 @@ public class EventService {
 
     @Transactional
     public void addEvent(EventForm eventForm) {
-        final Event myEvent = Event.EventBuilder
-                .anEvent()
-                .withEventName(eventForm.getEventName())
-                .withEventStart(eventForm.getEventStart())
-                .withEventEnd(eventForm.getEventEnd())
-                .withEventDescription(eventForm.getEventDescription())
-                .withEventOrganiser(userRepository.findByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail()).get())
+        final Event myEvent = Event.builder()
+                .eventName(eventForm.getEventName())
+                .eventStart(eventForm.getEventStart())
+                .eventEnd(eventForm.getEventEnd())
+                .eventDescription(eventForm.getEventDescription())
+                .eventOrganiser(userRepository.findByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail()).get())
                 .build();
 
         eventRepository.save(myEvent);

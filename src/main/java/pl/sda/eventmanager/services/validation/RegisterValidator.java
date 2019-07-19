@@ -1,10 +1,11 @@
-package pl.sda.eventmanager.services;
+package pl.sda.eventmanager.services.validation;
 
 import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import pl.sda.eventmanager.dto.RegisterForm;
+import pl.sda.eventmanager.services.UserService;
 
 @Service
 public class RegisterValidator implements Validator {
