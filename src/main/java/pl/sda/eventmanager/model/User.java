@@ -30,7 +30,7 @@ public class User implements UserDetails {
     private Role role;
 
     @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-    private Set<Event> organisedEvents;
+    private List<Event> organisedEvents;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "USER_EVENT",
@@ -94,4 +94,8 @@ public class User implements UserDetails {
         return other instanceof User;
     }
 
+    @Override
+    public String toString() {
+        return nickname;
+    }
 }

@@ -35,8 +35,10 @@ public class AdminCreationConfiguration  {
             adminForm.setPassword(password);
             adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
+            log.info("=====================================================");
             log.info("Admin account created.");
             log.info("Admin password: " + password);
+            log.info("=====================================================");
 
 
             // TODO FOR TESTING PURPOSES
