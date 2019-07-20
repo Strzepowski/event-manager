@@ -31,7 +31,12 @@
 </div>
 
 <div th:if="${searchedEventName != null}">
-    <p><span th:text="${searchedEventName}"></span> search results:</p>
+    <p>Search
+        <span th:if="${searchedEventName != null}">
+            <span th:text="${searchedEventName}">SEARCHED EVENT NAME</span>
+        </span> in
+        <span th:text="${eventFilter}"> EVENT FILTER NAME</span>
+       results:</p>
 </div>
 
 <div th:if="${events.isEmpty()}">
@@ -44,7 +49,9 @@
             <span>Posted by: <span th:text="${event.eventOrganiser}">NICKNAME</span></span>
         </div>
         <div class="card-body">
-            <h5 class="card-title"><strong th:text="${event.eventName}">EVENT TITLE</strong></h5>
+            <h5 class="card-title">
+                <a th:href="@{/event(id=${event.id})}">
+                    <strong th:text="${event.eventName}">EVENT NAME</strong></a></h5>
             <p class="card-text">
                 <span th:text="${#strings.abbreviate(event.eventDescription,50)}">DESCRIPTION
                 50 CHARACTERS</span></p>

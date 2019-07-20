@@ -23,18 +23,18 @@ public class EventSearchController {
                                     @RequestParam(value = "eventFilter") /*TODO ENUM*/  String eventFilter) {
         ModelAndView modelAndView = new ModelAndView("index");
         modelAndView.addObject("searchedEventName", eventName);
-        if (eventFilter.equals("future")) {
+        modelAndView.addObject("eventFilter", eventFilter);
+        if (eventFilter.equals("Future Events")) {
             modelAndView.addObject("events", eventService.findAllByEventNameContainingAndEventStartAfterOrderByEventEnd(eventName, LocalDateTime.now()));
         }
 
-        if (eventFilter.equals("ongoing")) {
+        if (eventFilter.equals("Ongoing Events")) {
             modelAndView.addObject("events", eventService.findAllByEventNameContainingAndEventStartBeforeOrderByEventEnd(eventName, LocalDateTime.now()));
         }
 
-        if (eventFilter.equals("all")) {
+        if (eventFilter.equals("All Events")) {
             modelAndView.addObject("events", eventService.findAllByEventNameContainingOrderByEventEnd(eventName));
         }
-
         return modelAndView;
     }
 

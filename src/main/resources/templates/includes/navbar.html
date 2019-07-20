@@ -11,22 +11,24 @@
 
 
     <!-- Search form -->
-    <!-- //TODO search criteria   -->
     <div class="w-50 justify-content-center order-1">
         <form class="form-inline mr-sm-2"
               method="get"
               action="/search">
-            <input class="form-control mr-sm-2 w-25"
+            <input class="form-control mr-sm-2 w-50"
                    type="search"
                    placeholder="Event Title"
                    aria-label="Search"
                    name="eventName">
-            <select class="custom-select mr-sm-2"
-                    name="eventFilter">
-                <option value="future">Future Events</option>
-                <option value="ongoing">Ongoing Events</option>
-                <option value="all">All Events</option>
-            </select>
+            <label>
+                <!-- //TODO przejście aktualnego pola wyszukiwania na kolejny widok -->
+                <select class="custom-select mr-sm-2"
+                        name="eventFilter">
+                    <option value="Future Events">Future Events</option>
+                    <option value="Ongoing Events">Ongoing Events</option>
+                    <option value="All Events">All Events</option>
+                </select>
+            </label>
             <button class="btn btn-success mr-sm-2"
                     type="submit">Search
             </button>

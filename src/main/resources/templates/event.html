@@ -1,10 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
 <head>
+
+    <!-- Required meta tags -->
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+          crossorigin="anonymous">
+
+    <title>Event</title>
+
 </head>
 <body>
+<div th:include="/includes/navbar.html"></div>
 
+<div>
+    <p></p>
+    <div class="card text-center">
+        <div class="card-header">
+            <span>Posted by: <span th:text="${singleEvent.eventOrganiser}">NICKNAME</span></span>
+        </div>
+        <div class="card-body">
+            <h5 class="card-title"><strong th:text="${singleEvent.eventName}">EVENT NAME</strong></h5>
+            <p class="card-text">
+                <span th:text="${singleEvent.eventDescription}">DESCRIPTION</span></p>
+        </div>
+        <div class="card-footer text-muted">
+            <p>Starts:
+                <span th:text="${#temporals.format(singleEvent.eventStart, 'dd-MM-yyyy HH:mm')}">START DATE</span></p>
+            <p>Ends: <span th:text="${#temporals.format(singleEvent.eventEnd, 'dd-MM-yyyy HH:mm')}">END DATE</span></p>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 </body>
 </html>

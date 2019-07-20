@@ -1,4 +1,4 @@
-package pl.sda.eventmanager.controllers;
+package pl.sda.eventmanager.controllers.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -9,6 +9,9 @@ import org.springframework.web.servlet.ModelAndView;
 import pl.sda.eventmanager.dto.LoginForm;
 import pl.sda.eventmanager.services.validation.AdminValidator;
 import pl.sda.eventmanager.services.validation.LoginValidator;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
@@ -30,20 +33,24 @@ public class LoginController {
         return new ModelAndView("login", "loginForm", new LoginForm());
     }
 
+    //TODO NAVBAR BUTTONS DISAPPEARING
     @PostMapping("loginForm")
-    public ModelAndView loginFormPost(@ModelAttribute LoginForm loginForm, BindingResult bindingResult) {
+    public ModelAndView loginFormPost(@ModelAttribute LoginForm loginForm, BindingResult bindingResult/*, HttpServletRequest httpServletRequest*/) /*throws ServletException*/ {
 
         if(loginForm.getEmail().equals("admin")){
         adminValidator.validate(loginForm, bindingResult);
         } else loginValidator.validate(loginForm, bindingResult);
-
-        //TODO NAVBAR BUTTONS DISAPPEARING
 
         if (bindingResult.hasErrors()) {
             ModelAndView modelAndView = new ModelAndView("login");
             modelAndView.addObject("error", bindingResult.getFieldError().getDefaultMessage());
             return modelAndView;
         }
-        return new ModelAndView("forward:/login");
+//        try {
+//            httpServletRequest.login(loginForm.getEmail(), loginForm.getPassword());
+//        } catch (ServletException e) {
+//
+//        }
+        return new ModelAndView("redirect:/login");
     }
 }

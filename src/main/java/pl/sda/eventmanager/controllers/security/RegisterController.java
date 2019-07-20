@@ -1,4 +1,4 @@
-package pl.sda.eventmanager.controllers;
+package pl.sda.eventmanager.controllers.security;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
+import pl.sda.eventmanager.controllers.IndexListController;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.services.EventService;
 import pl.sda.eventmanager.services.UserService;

@@ -11,8 +11,11 @@ import java.util.Optional;
 @Repository
 public interface EventRepository extends JpaRepository<Event, Long> {
 
-    //single event
+    //single event by name
     Optional<Event> findByEventName(String eventName);
+
+    //single event by id
+    Optional<Event> findById(Long id);
 
     //future events
     List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow);

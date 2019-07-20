@@ -1,4 +1,4 @@
-package pl.sda.eventmanager.controllers;
+package pl.sda.eventmanager.controllers.role.admin;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

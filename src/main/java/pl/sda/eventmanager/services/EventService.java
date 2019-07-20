@@ -26,8 +26,14 @@ public class EventService {
         this.eventRepository = eventRepository;
     }
 
+    //single event by name
     public Optional<Event> findByEventName(String eventName) {
         return eventRepository.findByEventName(eventName);
+    }
+
+    //single event by id
+    public Optional<Event> findById(Long id) {
+        return eventRepository.findById(id);
     }
 
     //future events containing

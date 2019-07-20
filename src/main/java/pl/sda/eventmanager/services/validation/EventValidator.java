@@ -41,7 +41,7 @@ public class EventValidator implements Validator {
                 errors.rejectValue("eventEnd", "Date.eventForm.eventEnd", "Event already finished. Check event ending time.");
             }
             if (eventForm.getEventStart().isAfter(eventForm.getEventEnd())) {
-                errors.rejectValue("eventStart", "Date.eventForm.eventStart", "Event cannot begin after it ended. Check event start and endig time.");
+                errors.rejectValue("eventStart", "Date.eventForm.eventStart", "Event cannot begin after it ended. Check event start and ending time.");
             }
             ValidationUtils.rejectIfEmptyOrWhitespace(errors, "eventDescription", "NotEmpty", "All fields are required.");
             if (eventForm.getEventDescription().length() < 20) {
