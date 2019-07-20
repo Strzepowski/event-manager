@@ -1,9 +1,6 @@
 package pl.sda.eventmanager.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,8 +8,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import javax.persistence.*;
 import java.util.*;
 
-@Entity
 @Data
+@Entity
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,7 +29,7 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "eventOrganiser", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Event> organisedEvents;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -43,11 +40,6 @@ public class User implements UserDetails {
 
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private UserInfo userInfo;
-
-    @Override
-    public String toString() {
-        return nickname;
-    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -97,4 +89,9 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+    protected boolean canEqual(final Object other) {
+        return other instanceof User;
+    }
+
 }

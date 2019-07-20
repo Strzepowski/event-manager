@@ -30,32 +30,32 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
 
-                    .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm" ).permitAll()
-                    .antMatchers("/organiser/**").hasRole("ORGANISER")
-                    .antMatchers("/admin/**").hasRole("ADMIN")
-                    .anyRequest()
-                        .fullyAuthenticated()
+                .antMatchers("/", "/register", "/h2db/**", "/login", "/loginForm", "/search/**").permitAll()
+                .antMatchers("/organiser/**").hasRole("ORGANISER")
+                .antMatchers("/admin/**").hasRole("ADMIN")
+                .anyRequest()
+                .fullyAuthenticated()
 
                 .and()
-                    .formLogin()
-                    .loginPage("/login")
-                    .loginProcessingUrl("/loginForm")
-                    .usernameParameter("email")
-                    .passwordParameter("password")
-                    .defaultSuccessUrl("/", true)
-                    .failureForwardUrl("/loginForm")
-                        .permitAll()
+                .formLogin()
+                .loginPage("/login")
+                .loginProcessingUrl("/loginForm")
+                .usernameParameter("email")
+                .passwordParameter("password")
+                .defaultSuccessUrl("/", true)
+                .failureForwardUrl("/loginForm")
+                .permitAll()
 
                 .and()
-                    .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                    .invalidateHttpSession(true)
-                    .clearAuthentication(true)
-                    .logoutSuccessUrl("/")
-                        .permitAll()
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .invalidateHttpSession(true)
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/")
+                .permitAll()
 
                 .and()
-                    .userDetailsService(userDetailsService);
+                .userDetailsService(userDetailsService);
 
 //        //H2
         http.csrf().disable();

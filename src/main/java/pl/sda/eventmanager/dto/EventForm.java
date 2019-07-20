@@ -2,8 +2,6 @@ package pl.sda.eventmanager.dto;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.core.context.SecurityContextHolder;
-import pl.sda.eventmanager.model.User;
 
 import java.time.LocalDateTime;
 

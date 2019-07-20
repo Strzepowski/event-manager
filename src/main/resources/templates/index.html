@@ -30,6 +30,10 @@
     <p><span th:text="${eventAdded}"></span> event created.</p>
 </div>
 
+<div th:if="${searchedEventName != null}">
+    <p><span th:text="${searchedEventName}"></span> search results:</p>
+</div>
+
 <div th:if="${events.isEmpty()}">
     <div>No current events.</div>
 </div>

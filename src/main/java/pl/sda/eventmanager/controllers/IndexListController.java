@@ -22,8 +22,6 @@ public class IndexListController {
 
     @ModelAttribute("events")
     public List<Event> getEventList() {
-
-        List<Event> events = eventService.findAllOngoingAndFutureEvents();
-        return eventService.sortEventList(events);
+       return eventService.findByEventStartAfterOrderByEventEnd(LocalDateTime.now());
     }
 }

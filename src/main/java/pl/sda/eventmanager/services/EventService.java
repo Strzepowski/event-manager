@@ -30,8 +30,23 @@ public class EventService {
         return eventRepository.findByEventName(eventName);
     }
 
-    public List<Event> findAllOngoingAndFutureEvents() {
-        return eventRepository.findAll();
+    //future events containing
+    public List<Event> findAllByEventNameContainingAndEventStartAfterOrderByEventEnd(String eventName, LocalDateTime dateNow) {
+        return eventRepository.findAllByEventNameContainingAndEventStartAfterOrderByEventEnd(eventName, dateNow);
+    }
+
+    //ongoing events containing
+    public List<Event> findAllByEventNameContainingAndEventStartBeforeOrderByEventEnd(String eventName, LocalDateTime dateNow) {
+        return eventRepository.findAllByEventNameContainingAndEventStartBeforeOrderByEventEnd(eventName, dateNow);
+    }
+
+    //all events containing
+    public List<Event> findAllByEventNameContainingOrderByEventEnd(String eventName) {
+        return eventRepository.findAllByEventNameContainingOrderByEventEnd(eventName);
+    }
+
+    public List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow) {
+        return eventRepository.findByEventStartAfterOrderByEventEnd(dateNow);
     }
 
     @Transactional
@@ -45,15 +60,5 @@ public class EventService {
                 .build();
 
         eventRepository.save(myEvent);
-    }
-
-    //TODO LIST IS NOT SORTED ON "/"
-
-    public List<Event> sortEventList(List<Event> events) {
-        events.stream()
-                .filter(x -> x.getEventEnd().isAfter(LocalDateTime.now()))
-                .sorted(Comparator.comparing(Event::getEventEnd).reversed())
-                .collect(Collectors.toList());
-        return events;
     }
 }
