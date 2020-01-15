@@ -51,8 +51,14 @@ public class EventService {
         return eventRepository.findAllByEventNameContainingOrderByEventEnd(eventName);
     }
 
-    public List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow) {
-        return eventRepository.findByEventStartAfterOrderByEventEnd(dateNow);
+    //future events
+    //    public List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow) {
+    //        return eventRepository.findByEventStartAfterOrderByEventEnd(dateNow);
+    //    }
+
+    //all events
+    public List<Event> findAllByOrderByEventEnd(){
+        return eventRepository.findAllByOrderByEventEnd();
     }
 
     @Transactional

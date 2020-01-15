@@ -1,14 +1,18 @@
 package pl.sda.eventmanager.config;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
+import pl.sda.eventmanager.dto.EventForm;
 import pl.sda.eventmanager.dto.RegisterForm;
 import pl.sda.eventmanager.model.Role;
+import pl.sda.eventmanager.services.EventService;
 import pl.sda.eventmanager.services.UserService;
 
+import java.security.Principal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Component
@@ -35,10 +39,12 @@ public class AdminCreationConfiguration  {
             adminForm.setPassword(password);
             adminForm.setRole(Role.ROLE_ADMIN);
             userService.saveUser(adminForm);
+            log.info(" ");
             log.info("=====================================================");
             log.info("Admin account created.");
             log.info("Admin password: " + password);
             log.info("=====================================================");
+            log.info(" ");
 
 
             // TODO FOR TESTING PURPOSES
@@ -55,6 +61,7 @@ public class AdminCreationConfiguration  {
             organiserForm.setRole(Role.ROLE_ORGANISER);
             userService.saveUser(organiserForm);
         }
+
     }
 }
 

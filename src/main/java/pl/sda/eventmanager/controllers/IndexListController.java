@@ -19,9 +19,8 @@ public class IndexListController {
         this.eventService = eventService;
     }
 
-
     @ModelAttribute("events")
     public List<Event> getEventList() {
-       return eventService.findByEventStartAfterOrderByEventEnd(LocalDateTime.now());
+       return eventService.findAllByOrderByEventEnd();
     }
 }

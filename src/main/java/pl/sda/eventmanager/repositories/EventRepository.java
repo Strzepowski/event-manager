@@ -18,7 +18,7 @@ public interface EventRepository extends JpaRepository<Event, Long> {
     Optional<Event> findById(Long id);
 
     //future events
-    List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow);
+    //List<Event> findByEventStartAfterOrderByEventEnd(LocalDateTime dateNow);
 
     //future events containing
     List<Event> findAllByEventNameContainingAndEventStartAfterOrderByEventEnd(String eventName, LocalDateTime dateNow);
@@ -28,5 +28,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     //all events containing
     List<Event> findAllByEventNameContainingOrderByEventEnd(String eventName);
+
+    //all events
+    List<Event> findAllByOrderByEventEnd();
 
 }

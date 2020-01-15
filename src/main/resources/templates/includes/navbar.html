@@ -15,18 +15,20 @@
         <form class="form-inline mr-sm-2"
               method="get"
               action="/search">
-            <input class="form-control mr-sm-2 w-50"
+            <input th:object="${searchedEventName}"
+                   class="form-control mr-sm-2 w-50"
                    type="search"
-                   placeholder="Event Title"
+                   th:placeholder="${searchedEventName} ?: 'Event Title'"
                    aria-label="Search"
                    name="eventName">
-            <label>
-                <!-- //TODO przejście aktualnego pola wyszukiwania na kolejny widok -->
+
+            <label >
+                <!-- //TODO przejście aktualnego pola wyszukiwania na kolejny widok (th:object="${eventFilter}", selected, enum? ) -->
                 <select class="custom-select mr-sm-2"
                         name="eventFilter">
+                    <option value="All Events">All Events</option>
                     <option value="Future Events">Future Events</option>
                     <option value="Ongoing Events">Ongoing Events</option>
-                    <option value="All Events">All Events</option>
                 </select>
             </label>
             <button class="btn btn-success mr-sm-2"
