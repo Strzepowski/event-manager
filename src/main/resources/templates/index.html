@@ -20,6 +20,7 @@
 
 </head>
 <body>
+<!-- navbar on top -->
 <div th:include="/includes/navbar.html"></div>
 
 <p>This is Event Manager main page!</p>
@@ -42,23 +43,27 @@
 <div th:if="${events.isEmpty()}">
     <div>No current events.</div>
 </div>
-<div th:each="event : ${events}">
+<div th:each="event : ${events}" class="card mx-auto" style="width: 50rem">
     <p></p>
     <div class="card text-center">
         <div class="card-header">
-            <span>Posted by: <span th:text="${event.eventOrganiser}">NICKNAME</span></span>
+            <span class="btn btn-success">Posted by: <span th:text="${event.eventOrganiser}">NICKNAME</span></span>
         </div>
         <div class="card-body">
             <h5 class="card-title">
                 <a th:href="@{/event(id=${event.id})}">
                     <strong th:text="${event.eventName}">EVENT NAME</strong></a></h5>
             <p class="card-text">
-                <span th:text="${#strings.abbreviate(event.eventDescription,50)}">DESCRIPTION
-                50 CHARACTERS</span></p>
+                <span th:text="${#strings.abbreviate(event.eventDescription,50)}">DESCRIPTION </span></p>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-body text-muted">
             <p>Starts: <span th:text="${#temporals.format(event.eventStart, 'dd-MM-yyyy HH:mm')}">START DATE</span></p>
             <p>Ends: <span th:text="${#temporals.format(event.eventEnd, 'dd-MM-yyyy HH:mm')}">END DATE</span></p>
+        </div>
+
+        <!--   comment count        -->
+        <div class="card-footer">
+            <span class="btn btn-success" style="float: left">COMMENTS: <span th:text="${#lists.size(event.comments)}">X</span></span>
         </div>
     </div>
 

@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Objects;
+import java.util.List;
 import java.util.Set;
 
 
@@ -37,4 +37,9 @@ public class Event {
 
     @ManyToMany(mappedBy = "attendedEvents")
     private Set<User> eventAttendants;
+
+
+    //TODO
+    @OneToMany(mappedBy = "commentedEvent")
+    private List<Comment> comments;
 }

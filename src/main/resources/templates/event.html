@@ -20,30 +20,77 @@
 
 </head>
 <body>
+<!-- navbar on top -->
 <div th:include="/includes/navbar.html"></div>
 
-<div>
+<div class="card mx-auto" style="width: 50rem">
     <p></p>
     <div class="card text-center">
         <div class="card-header">
-            <span>Posted by: <span th:text="${singleEvent.eventOrganiser}">NICKNAME</span></span>
+            <span class="btn btn-success">Posted by: <span
+                    th:text="${singleEvent.eventOrganiser}">NICKNAME</span></span>
         </div>
         <div class="card-body">
             <h5 class="card-title"><strong th:text="${singleEvent.eventName}">EVENT NAME</strong></h5>
             <p class="card-text">
                 <span th:text="${singleEvent.eventDescription}">DESCRIPTION</span></p>
         </div>
-        <div class="card-footer text-muted">
+        <div class="card-body text-muted">
             <p>Starts:
                 <span th:text="${#temporals.format(singleEvent.eventStart, 'dd-MM-yyyy HH:mm')}">START DATE</span></p>
             <p>Ends: <span th:text="${#temporals.format(singleEvent.eventEnd, 'dd-MM-yyyy HH:mm')}">END DATE</span></p>
         </div>
+
+        <!--   comment count        -->
+        <div class="card-footer">
+            <span class="btn btn-success" style="float: left">COMMENTS: <span th:text="${commentCount}">X</span></span>
+        </div>
+
+
+        <!--    comment add form    -->
+        <div class="card-body" sec:authorize="hasRole('ROLE_USER')">
+            <form role="form"
+                  th:action="@{/event(id=${singleEvent.id})}"
+                  th:object="${commentForm}"
+                  method="post">
+
+                <div class="form-group">
+                    <input type="text"
+                           name="commentContents"
+                           id="commentContents"
+                           class="form-control input-sm"
+                           placeholder="Write a comment here.*"
+                           th:field="*{commentContents}">
+                    <small>*maximum 500 characters
+                    </small>
+                </div>
+
+                <input type="submit"
+
+                       value="ADD COMMENT"
+                       class="btn btn-info btn-block">
+                <div th:text="${error}"></div>
+
+            </form>
+
+        </div>
+
+        <!--    comments    -->
+        <div th:each="comment : ${comments}">
+
+            <div class="card text-left">
+                <div class="card-header">
+                    <span th:text="${comment.commentAuthor}">NICKNAME</span>
+                    <span style="float: right" th:text="${#temporals.format(comment.postDateTime, 'dd-MM-yyyy HH:mm:ss')}">POST DATE</span>
+                </div>
+                <div class="card-body text-center" >
+                    <span th:text="${comment.commentContents}">COMMENT</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 </div>
-
-
-
 
 
 <!-- Optional JavaScript -->

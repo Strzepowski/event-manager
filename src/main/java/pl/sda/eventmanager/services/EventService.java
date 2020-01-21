@@ -3,7 +3,9 @@ package pl.sda.eventmanager.services;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import pl.sda.eventmanager.dto.CommentForm;
 import pl.sda.eventmanager.dto.EventForm;
+import pl.sda.eventmanager.model.Comment;
 import pl.sda.eventmanager.model.Event;
 import pl.sda.eventmanager.model.User;
 import pl.sda.eventmanager.repositories.EventRepository;
@@ -57,7 +59,7 @@ public class EventService {
     //    }
 
     //all events
-    public List<Event> findAllByOrderByEventEnd(){
+    public List<Event> findAllByOrderByEventEnd() {
         return eventRepository.findAllByOrderByEventEnd();
     }
 
@@ -73,4 +75,6 @@ public class EventService {
 
         eventRepository.save(myEvent);
     }
+
+
 }
