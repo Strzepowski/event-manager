@@ -12,6 +12,7 @@ import pl.sda.eventmanager.repositories.EventRepository;
 import pl.sda.eventmanager.repositories.UserRepository;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -71,6 +72,7 @@ public class EventService {
                 .eventEnd(eventForm.getEventEnd())
                 .eventDescription(eventForm.getEventDescription())
                 .eventOrganiser(userRepository.findByEmail(((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getEmail()).get())
+                .comments(Collections.emptyList())
                 .build();
 
         eventRepository.save(myEvent);

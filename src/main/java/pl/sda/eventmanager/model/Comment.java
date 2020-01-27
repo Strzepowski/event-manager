@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Type;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Comment {
     private LocalDateTime postDateTime;
 
     @Column(nullable = false)
+    @Type(type = "text")
     private String commentContents;
 
     //TODO

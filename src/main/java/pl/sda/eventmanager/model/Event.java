@@ -1,6 +1,8 @@
 package pl.sda.eventmanager.model;
 
 import lombok.*;
+import org.hibernate.annotations.Type;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -33,13 +35,12 @@ public class Event {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
     private LocalDateTime eventEnd;
     @Column(nullable = false)
+    @Type(type = "text")
     private String eventDescription;
 
     @ManyToMany(mappedBy = "attendedEvents")
     private Set<User> eventAttendants;
 
-
-    //TODO
     @OneToMany(mappedBy = "commentedEvent")
     private List<Comment> comments;
 }
